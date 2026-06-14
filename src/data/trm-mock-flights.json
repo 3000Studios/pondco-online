@@ -1,0 +1,50 @@
+[
+  {
+    "id": "EJA742",
+    "aircraft": "Bombardier Challenger 350",
+    "origin": "LAS",
+    "destination": "TRM",
+    "altitude": 8500,
+    "speed": 380,
+    "heading": 210,
+    "status": "Inbound",
+    "type": "NetJets Charter",
+    "coordinates": { "x": 75, "y": 20 }
+  },
+  {
+    "id": "N900XP",
+    "aircraft": "Gulfstream G650",
+    "origin": "HND",
+    "destination": "TRM",
+    "altitude": 12000,
+    "speed": 430,
+    "heading": 130,
+    "status": "Descending",
+    "type": "Private Jet",
+    "coordinates": { "x": 35, "y": 45 }
+  },
+  {
+    "id": "N120GA",
+    "aircraft": "Cessna Citation CJ4",
+    "origin": "TRM",
+    "destination": "LAX",
+    "altitude": 6000,
+    "speed": 290,
+    "heading": 290,
+    "status": "Outbound",
+    "type": "Corporate",
+    "coordinates": { "x": 20, "y": 70 }
+  },
+  {
+    "id": "N580MT",
+    "aircraft": "Pilatus PC-12",
+    "origin": "PSP",
+    "destination": "TRM",
+    "altitude": 3000,
+    "speed": 185,
+    "heading": 120,
+    "status": "Final Approach",
+    "type": "Air Taxi",
+    "coordinates": { "x": 48, "y": 85 }
+  }
+]

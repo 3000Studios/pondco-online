@@ -1,0 +1,50 @@
+[
+  {
+    "id": "N172SP",
+    "aircraft": "Cessna 172 Skyhawk",
+    "origin": "F70",
+    "destination": "F70",
+    "altitude": 1500,
+    "speed": 95,
+    "heading": 180,
+    "status": "In Pattern",
+    "type": "GA Training",
+    "coordinates": { "x": 45, "y": 55 }
+  },
+  {
+    "id": "N310PD",
+    "aircraft": "Beechcraft Baron 58",
+    "origin": "SAN",
+    "destination": "F70",
+    "altitude": 3500,
+    "speed": 160,
+    "heading": 350,
+    "status": "Inbound",
+    "type": "Private",
+    "coordinates": { "x": 65, "y": 80 }
+  },
+  {
+    "id": "N84GD",
+    "aircraft": "Cirrus SR22",
+    "origin": "F70",
+    "destination": "SNA",
+    "altitude": 4500,
+    "speed": 145,
+    "heading": 270,
+    "status": "Outbound",
+    "type": "GA Business",
+    "coordinates": { "x": 30, "y": 40 }
+  },
+  {
+    "id": "N500P",
+    "aircraft": "Piper PA-28 Archer",
+    "origin": "CRQ",
+    "destination": "F70",
+    "altitude": 2000,
+    "speed": 110,
+    "heading": 15,
+    "status": "Final Approach",
+    "type": "GA Leisure",
+    "coordinates": { "x": 50, "y": 15 }
+  }
+]
