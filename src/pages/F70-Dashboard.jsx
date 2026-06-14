@@ -84,28 +84,33 @@ export default function F70Dashboard() {
         </div>
 
         {/* Structural Specifications */}
-        <div className="glass-panel rounded-xl p-6">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Layers size={16} className="text-cyan-400" />
-            Tower Structural Specs
-          </h3>
-          <div className="space-y-3 text-xs">
-            <div className="flex justify-between py-1.5 border-b border-slate-900/50">
-              <span className="text-slate-400">Target Cab Height</span>
-              <span className="font-semibold text-white font-mono">65 ft AGL</span>
+        <div className="glass-panel rounded-xl p-6 flex flex-col justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <Layers size={16} className="text-cyan-400" />
+              Tower Structural Specs
+            </h3>
+            <div className="space-y-3 text-xs">
+              <div className="flex justify-between py-1.5 border-b border-slate-900/50">
+                <span className="text-slate-400">Target Cab Height</span>
+                <span className="font-semibold text-white font-mono">65 ft AGL</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-slate-900/50">
+                <span className="text-slate-400">Cab Console Positions</span>
+                <span className="font-semibold text-white font-mono">2 Active Positions</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-slate-900/50">
+                <span className="text-slate-400">Regulatory Oversight</span>
+                <span className="font-semibold text-white">FAA Order 6480.7E Compliant</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-slate-900/50">
+                <span className="text-slate-400">Site Design Lead</span>
+                <span className="font-semibold text-white">KSA Engineers</span>
+              </div>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-slate-900/50">
-              <span className="text-slate-400">Cab Console Positions</span>
-              <span className="font-semibold text-white font-mono">2 Active Positions</span>
-            </div>
-            <div className="flex justify-between py-1.5 border-b border-slate-900/50">
-              <span className="text-slate-400">Regulatory Oversight</span>
-              <span className="font-semibold text-white">FAA Order 6480.7E Compliant</span>
-            </div>
-            <div className="flex justify-between py-1.5">
-              <span className="text-slate-400">Site Design Lead</span>
-              <span className="font-semibold text-white">KSA Engineers</span>
-            </div>
+          </div>
+          <div className="mt-6 border border-slate-900 bg-slate-950/60 rounded-lg p-2 overflow-hidden h-44 flex items-center justify-center">
+            <img src="/assets/f70-french-valley/blueprint.svg" alt="F70 Schematic Blueprint" className="max-h-full max-w-full opacity-80 hover:opacity-100 transition-opacity duration-300" />
           </div>
         </div>
       </div>
