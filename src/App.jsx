@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import Index from './pages/Index'
 import F70Dashboard from './pages/F70-Dashboard'
 import TRMDashboard from './pages/TRM-Dashboard'
-import { Plane, Building2, Home } from 'lucide-react'
+import DomainGuide from './pages/DomainGuide'
+import { Plane, Building2, Home, Sparkles } from 'lucide-react'
 
 function Navbar() {
   const location = useLocation()
@@ -53,6 +54,17 @@ function Navbar() {
           <Building2 size={16} />
           <span>TRM (Jacqueline Cochran)</span>
         </Link>
+        <Link 
+          to="/guide" 
+          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+            location.pathname === '/guide' 
+              ? 'bg-purple-950 text-purple-400 border border-purple-500/30' 
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+          }`}
+        >
+          <Sparkles size={16} />
+          <span>Domain Guide</span>
+        </Link>
       </div>
     </nav>
   )
@@ -76,6 +88,7 @@ export default function App() {
             <Route path="/" element={<Index />} />
             <Route path="/f70" element={<F70Dashboard />} />
             <Route path="/trm" element={<TRMDashboard />} />
+            <Route path="/guide" element={<DomainGuide />} />
           </Routes>
         </main>
         <Footer />
