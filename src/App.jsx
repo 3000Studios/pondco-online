@@ -3,10 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import Index from './pages/Index'
 import AviationProjects from './pages/AviationProjects'
 import Services from './pages/Services'
+import Markets from './pages/Markets'
+import Portfolio from './pages/Portfolio'
+import FAQ from './pages/FAQ'
+import Insights from './pages/Insights'
 import ClientProgress from './pages/ClientProgress'
 import EnterpriseHub from './pages/EnterpriseHub'
 import DomainGuide from './pages/DomainGuide'
-import { Plane, Building2, Home, Sparkles, Briefcase, FileText } from 'lucide-react'
+import { Plane, Building2, Home, Sparkles, Briefcase, FileText, Globe, Layers, HelpCircle, FileCheck } from 'lucide-react'
 
 function Navbar() {
   const location = useLocation()
@@ -57,6 +61,28 @@ function Navbar() {
           <span>Services</span>
         </Link>
         <Link 
+          to="/markets" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/markets' 
+              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+          }`}
+        >
+          <Globe size={14} />
+          <span>Markets</span>
+        </Link>
+        <Link 
+          to="/portfolio" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/portfolio' 
+              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+          }`}
+        >
+          <Layers size={14} />
+          <span>Portfolio</span>
+        </Link>
+        <Link 
           to="/client" 
           className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
             location.pathname === '/client' 
@@ -65,7 +91,7 @@ function Navbar() {
           }`}
         >
           <FileText size={14} />
-          <span>Client Portal</span>
+          <span>Client</span>
         </Link>
         <Link 
           to="/hub" 
@@ -75,7 +101,7 @@ function Navbar() {
               : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
           }`}
         >
-          <Briefcase size={14} />
+          <FileCheck size={14} />
           <span>SaaS Hub</span>
         </Link>
         <Link 
@@ -87,7 +113,7 @@ function Navbar() {
           }`}
         >
           <Sparkles size={14} />
-          <span>Domain Guide</span>
+          <span>Guide</span>
         </Link>
       </div>
     </nav>
@@ -97,6 +123,11 @@ function Navbar() {
 function Footer() {
   return (
     <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 mt-20 text-center text-xs text-slate-500 font-header uppercase tracking-wider">
+      <div className="flex justify-center space-x-6 mb-4 text-[10px] text-slate-400">
+        <Link to="/faq" className="hover:text-cyan-400">FAQ</Link>
+        <span>•</span>
+        <Link to="/insights" className="hover:text-cyan-400">Insights</Link>
+      </div>
       <p>Copyright © 2026 Pond & Company / 3000Studios. Confidential Project Engineering Spec Docs.</p>
     </footer>
   )
@@ -112,6 +143,10 @@ export default function App() {
             <Route path="/" element={<Index />} />
             <Route path="/projects" element={<AviationProjects />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/markets" element={<Markets />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/insights" element={<Insights />} />
             <Route path="/client" element={<ClientProgress />} />
             <Route path="/hub" element={<EnterpriseHub />} />
             <Route path="/guide" element={<DomainGuide />} />
