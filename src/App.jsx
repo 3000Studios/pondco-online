@@ -1,10 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import Index from './pages/Index'
-import F70Dashboard from './pages/F70-Dashboard'
-import TRMDashboard from './pages/TRM-Dashboard'
+import AviationProjects from './pages/AviationProjects'
+import Services from './pages/Services'
+import ClientProgress from './pages/ClientProgress'
+import EnterpriseHub from './pages/EnterpriseHub'
 import DomainGuide from './pages/DomainGuide'
-import { Plane, Building2, Home, Sparkles } from 'lucide-react'
+import { Plane, Building2, Home, Sparkles, Briefcase, FileText } from 'lucide-react'
 
 function Navbar() {
   const location = useLocation()
@@ -12,57 +14,79 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800 px-6 py-4 flex items-center justify-between">
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 rounded bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+        <div className="w-8 h-8 rounded bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20 font-header">
           P
         </div>
-        <span className="font-semibold text-lg tracking-wider text-white font-sans">
-          POND<span className="text-cyan-400 font-light">CO</span> <span className="text-[10px] uppercase tracking-[0.2em] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-900/50">Online</span>
+        <span className="font-semibold text-lg tracking-wider text-white font-header uppercase">
+          POND<span className="text-cyan-400 font-light">CO</span> <span className="text-[9px] uppercase tracking-[0.2em] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-900/50">Online</span>
         </span>
       </div>
       
-      <div className="flex space-x-1">
+      <div className="flex space-x-1 font-header text-xs font-bold uppercase tracking-wider">
         <Link 
           to="/" 
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
             location.pathname === '/' 
               ? 'bg-slate-800 text-white shadow-inner border border-slate-700/50' 
               : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
           }`}
         >
-          <Home size={16} />
-          <span>Agency Hub</span>
+          <Home size={14} />
+          <span>Home</span>
         </Link>
         <Link 
-          to="/f70" 
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-            location.pathname === '/f70' 
+          to="/projects" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/projects' 
               ? 'bg-cyan-950 text-cyan-400 border border-cyan-500/30' 
               : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
           }`}
         >
-          <Plane size={16} />
-          <span>F70 (French Valley)</span>
+          <Plane size={14} />
+          <span>Aviation</span>
         </Link>
         <Link 
-          to="/trm" 
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-            location.pathname === '/trm' 
-              ? 'bg-blue-950/80 text-blue-400 border border-blue-500/30' 
+          to="/services" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/services' 
+              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
               : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
           }`}
         >
-          <Building2 size={16} />
-          <span>TRM (Jacqueline Cochran)</span>
+          <Briefcase size={14} />
+          <span>Services</span>
+        </Link>
+        <Link 
+          to="/client" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/client' 
+              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+          }`}
+        >
+          <FileText size={14} />
+          <span>Client Portal</span>
+        </Link>
+        <Link 
+          to="/hub" 
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+            location.pathname === '/hub' 
+              ? 'bg-orange-950 text-orange-400 border border-orange-500/30' 
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+          }`}
+        >
+          <Briefcase size={14} />
+          <span>SaaS Hub</span>
         </Link>
         <Link 
           to="/guide" 
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
             location.pathname === '/guide' 
               ? 'bg-purple-950 text-purple-400 border border-purple-500/30' 
               : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
           }`}
         >
-          <Sparkles size={16} />
+          <Sparkles size={14} />
           <span>Domain Guide</span>
         </Link>
       </div>
@@ -72,7 +96,7 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 mt-20 text-center text-xs text-slate-500">
+    <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 mt-20 text-center text-xs text-slate-500 font-header uppercase tracking-wider">
       <p>Copyright © 2026 Pond & Company / 3000Studios. Confidential Project Engineering Spec Docs.</p>
     </footer>
   )
@@ -86,8 +110,10 @@ export default function App() {
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/f70" element={<F70Dashboard />} />
-            <Route path="/trm" element={<TRMDashboard />} />
+            <Route path="/projects" element={<AviationProjects />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/client" element={<ClientProgress />} />
+            <Route path="/hub" element={<EnterpriseHub />} />
             <Route path="/guide" element={<DomainGuide />} />
           </Routes>
         </main>
