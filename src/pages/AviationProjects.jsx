@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AirspaceMap from '../components/MapView/AirspaceMap'
 import f70Flights from '../data/f70-mock-flights.json'
 import trmFlights from '../data/trm-mock-flights.json'
-import { Plane, Compass, Layers, Wind, Eye } from 'lucide-react'
+import { Plane, Compass, Layers, Wind, Calendar } from 'lucide-react'
 
 export default function AviationProjects() {
   const [activeAirport, setActiveAirport] = useState('F70')
@@ -34,8 +34,17 @@ export default function AviationProjects() {
 
   const current = airportDetails[activeAirport]
 
+  // Gantt Chart Schedule Data
+  const ganttTasks = [
+    { name: 'Siting Assessment (FAA 6480.7E)', start: 'Month 1', end: 'Month 2', progress: 100, status: 'Completed' },
+    { name: 'Schematic Design & A/E Elevation Specs', start: 'Month 3', end: 'Month 5', progress: 100, status: 'Completed' },
+    { name: 'FAA Safety Joint Approval & Reviews', start: 'Month 6', end: 'Month 8', progress: 60, status: 'In Progress' },
+    { name: 'Construction Bid Support & Roster Planning', start: 'Month 9', end: 'Month 10', progress: 0, status: 'Scheduled' },
+    { name: 'Tower Construction & Commissioning', start: 'Month 11', end: 'Month 14', progress: 0, status: 'Scheduled' }
+  ]
+
   return (
-    <div className="space-y-10 max-w-6xl mx-auto py-6">
+    <div className="space-y-12 max-w-6xl mx-auto py-6 animate-slide-in">
       {/* Top Banner & Switcher */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-900 pb-6 gap-4">
         <div>
@@ -43,7 +52,7 @@ export default function AviationProjects() {
             <Plane size={28} className="text-cyan-400" />
             Aviation Command Center
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Real-time FAA Federal Contract Tower program design and telemetry trackers.</p>
+          <p className="text-xs text-slate-400 mt-1 font-serif">Real-time FAA Federal Contract Tower program design and telemetry trackers.</p>
         </div>
 
         {/* Option Selectors */}
@@ -85,7 +94,7 @@ export default function AviationProjects() {
             <p className="text-xs text-slate-400 leading-relaxed font-serif">{current.desc}</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-6 space-y-3 font-header text-xs">
+          <div className="glass-panel rounded-2xl p-6 space-y-3 font-header text-xs border hover:border-cyan-500/20 transition-all">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">Live Weather &amp; Runway Telemetry</h3>
             <div className="flex justify-between py-1.5 border-b border-slate-900/50">
               <span className="text-slate-500">Surface Wind</span>
@@ -109,13 +118,47 @@ export default function AviationProjects() {
         </div>
 
         {/* Right Side: AirspaceMap Component (Col 5-12) */}
-        <div className="lg:col-span-8 space-y-6">
-          <div className="space-y-3">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-header">Scope Telemetry Monitor</span>
-            <AirspaceMap flights={current.flights} airportCode={current.code} title={current.name} />
-          </div>
+        <div className="lg:col-span-8 space-y-3">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block font-header pl-1">Scope Telemetry Monitor</span>
+          <AirspaceMap flights={current.flights} airportCode={current.code} title={current.name} />
         </div>
       </div>
+
+      {/* SPRINT GANTT CHART SECTION */}
+      <section className="glass-panel rounded-3xl p-6 border border-slate-800 shadow-2xl space-y-6">
+        <h3 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2 font-header">
+          <Calendar size={20} className="text-cyan-400" />
+          ATCT Delivery Timeline (Gantt Chart)
+        </h3>
+        
+        <div className="space-y-4 font-header text-xs">
+          {ganttTasks.map((task, idx) => (
+            <div key={idx} className="grid grid-cols-12 gap-4 items-center border-b border-slate-900 pb-3">
+              <div className="col-span-12 md:col-span-4 space-y-0.5">
+                <span className="font-bold text-white uppercase tracking-wide block">{task.name}</span>
+                <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider inline-block ${
+                  task.status === 'Completed' ? 'bg-emerald-950 text-emerald-400 border border-emerald-900/30' :
+                  task.status === 'In Progress' ? 'bg-amber-950 text-amber-400 animate-pulse border border-amber-900/30' :
+                  'bg-slate-900 text-slate-500 border border-slate-800'
+                }`}>{task.status}</span>
+              </div>
+              <div className="col-span-12 md:col-span-8 space-y-1">
+                <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                  <span>Start: {task.start}</span>
+                  <span>End: {task.end}</span>
+                </div>
+                {/* 3D Progress Bar */}
+                <div className="w-full bg-slate-950 h-3.5 rounded-full p-0.5 border border-slate-850 shadow-inner overflow-hidden">
+                  <div 
+                    className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 shadow-[0_2px_4px_rgba(0,242,254,0.3)] transition-all duration-500"
+                    style={{ width: `${task.progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Schematic Blueprint Gallery */}
       <div className="space-y-4">
@@ -123,7 +166,7 @@ export default function AviationProjects() {
           <Layers size={18} className="text-cyan-400" />
           Architectural Elevation Schematics
         </h3>
-        <div className="glass-panel rounded-2xl p-4 overflow-hidden h-[450px] bg-slate-950 flex items-center justify-center border border-slate-900 relative">
+        <div className="glass-panel rounded-2xl p-4 overflow-hidden h-[450px] bg-slate-950 flex items-center justify-center border border-slate-900 relative shadow-2xl">
           <div className="absolute top-4 right-4 z-10 flex items-center space-x-2 bg-slate-950/80 border border-slate-900 px-3 py-1 rounded-full text-[10px] font-mono text-cyan-400">
             <span className="w-1.5 h-1.5 rounded-full bg-red-500 beacon-active" />
             <span>FAA Siting Schematic</span>
