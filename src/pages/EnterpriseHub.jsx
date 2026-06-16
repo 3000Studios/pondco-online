@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ShieldCheck, Layers, FileText, CheckCircle2, XCircle, AlertTriangle, Users, BookOpen, Send, Plane, Calendar, Clock, HardHat, PhoneCall } from 'lucide-react'
+import { ShieldCheck, Layers, FileText, CheckCircle2, XCircle, AlertTriangle, Users, BookOpen, Send, Plane, Calendar, Clock, HardHat, PhoneCall, ChevronRight } from 'lucide-react'
 
 export default function EnterpriseHub() {
   const role = localStorage.getItem('pondco_user_role') || 'executive'
