@@ -1,5 +1,5 @@
 import React from 'react'
-import { Shield, Plane, Activity, Compass, Flame, ShieldAlert, Cpu } from 'lucide-react'
+import { Shield, Plane, Activity, Compass, Flame, Cpu } from 'lucide-react'
 
 export default function Markets() {
   const marketList = [
@@ -12,11 +12,14 @@ export default function Markets() {
   ]
 
   return (
-    <div className="space-y-12 max-w-5xl mx-auto py-6 font-header">
+    <div className="space-y-12 max-w-5xl mx-auto py-6 font-header animate-slide-in">
       <div className="text-center space-y-4 max-w-2xl mx-auto">
+        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-indigo-800/40 text-indigo-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+          <span>Global Markets</span>
+        </div>
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white uppercase">Markets We Coordinate</h1>
-        <p className="text-sm text-slate-400 font-serif">
-          Providing full-service architecture, engineering, and program management across diverse industries.
+        <p className="text-sm text-slate-400 font-serif leading-relaxed">
+          Providing full-service architecture, engineering, and program management across diverse public and private sectors.
         </p>
       </div>
 
@@ -24,9 +27,9 @@ export default function Markets() {
         {marketList.map((m, idx) => {
           const Icon = m.icon
           return (
-            <div key={idx} className="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-slate-700/85 transition-all">
+            <div key={idx} className="glass-panel rounded-3xl p-6 relative overflow-hidden group hover:border-indigo-500/50 hover:scale-[1.01] transition-all duration-300 shadow-[0_12px_24px_rgba(0,0,0,0.5)]">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-900 text-cyan-400 group-hover:text-amber-500 transition-colors">
+                <div className="p-3 bg-slate-950 rounded-xl border border-slate-900 text-indigo-400 group-hover:text-indigo-300 transition-colors shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
                   <Icon size={20} />
                 </div>
                 <div className="space-y-2">

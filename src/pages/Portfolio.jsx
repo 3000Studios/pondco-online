@@ -1,5 +1,4 @@
 import React from 'react'
-import { Award, Layers, Clock, ShieldCheck } from 'lucide-react'
 
 export default function Portfolio() {
   const projects = [
@@ -24,17 +23,20 @@ export default function Portfolio() {
   ]
 
   return (
-    <div className="space-y-12 max-w-5xl mx-auto py-6 font-header">
+    <div className="space-y-12 max-w-5xl mx-auto py-6 font-header animate-slide-in">
       <div className="text-center space-y-4 max-w-2xl mx-auto">
+        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-amber-800/40 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+          <span>Project History</span>
+        </div>
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white uppercase">Project Portfolio</h1>
-        <p className="text-sm text-slate-400 font-serif">
+        <p className="text-sm text-slate-400 font-serif leading-relaxed">
           A showcase of our architectural, engineering, and infrastructure delivery successes.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {projects.map((p, idx) => (
-          <div key={idx} className="glass-panel rounded-2xl p-6 relative overflow-hidden group space-y-4">
+          <div key={idx} className="glass-panel rounded-3xl p-6 relative overflow-hidden group space-y-4 hover:border-amber-500/50 hover:scale-[1.02] transition-all duration-300 shadow-[0_12px_24px_rgba(0,0,0,0.5)]">
             <div className="flex justify-between items-start">
               <div>
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">{p.location}</span>
@@ -42,9 +44,9 @@ export default function Portfolio() {
               </div>
             </div>
             <p className="text-xs text-slate-400 font-serif leading-relaxed">{p.desc}</p>
-            <div className="border-t border-slate-900 pt-3 flex justify-between items-center text-[10px] font-bold uppercase tracking-wider">
+            <div className="border-t border-slate-900 pt-3 flex justify-between items-center text-[10px] font-bold uppercase tracking-wider font-mono">
               <span className="text-slate-500">Status</span>
-              <span className="text-cyan-400">{p.status}</span>
+              <span className="text-amber-400">{p.status}</span>
             </div>
           </div>
         ))}
