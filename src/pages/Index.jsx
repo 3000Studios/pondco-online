@@ -9,6 +9,7 @@ export default function Index() {
   const [activeLoginTab, setActiveLoginTab] = useState('client') // client | internal
   const [loginRole, setLoginRole] = useState('executive')
   const [accessCode, setAccessCode] = useState('')
+  const [loginError, setLoginError] = useState('')
   const [hoveredVideo, setHoveredVideo] = useState(false)
   const [activePortfolioTab, setActivePortfolioTab] = useState('aviation') // aviation | government | infrastructure
 
@@ -25,6 +26,11 @@ export default function Index() {
 
   const handleLogin = (e) => {
     e.preventDefault()
+    setLoginError('')
+    if (accessCode !== '1234') {
+      setLoginError('INVALID ACCESS KEY. AUTHENTICATION FAILED.')
+      return
+    }
     if (activeLoginTab === 'client') {
       navigate('/client')
     } else {
@@ -34,7 +40,7 @@ export default function Index() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between overflow-hidden animated-clouds space-y-20">
+    <div className="relative min-h-screen flex flex-col justify-between overflow-hidden space-y-20">
       
       {/* 1. HERO SECTION & TIME/WEATHER OVERLAY */}
       <div className="relative pt-10">
@@ -93,7 +99,7 @@ export default function Index() {
                 <div className="flex border-b border-slate-900 mb-6 font-header">
                   <button
                     type="button"
-                    onClick={() => setActiveLoginTab('client')}
+                    onClick={() => { setActiveLoginTab('client'); setLoginError(''); setAccessCode(''); }}
                     className={`flex-1 pb-3 text-sm font-semibold uppercase tracking-wider border-b-2 transition-all ${
                       activeLoginTab === 'client' ? 'border-cyan-400 text-cyan-400' : 'border-transparent text-slate-500 hover:text-slate-300'
                     }`}
@@ -102,7 +108,7 @@ export default function Index() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setActiveLoginTab('internal')}
+                    onClick={() => { setActiveLoginTab('internal'); setLoginError(''); setAccessCode(''); }}
                     className={`flex-1 pb-3 text-sm font-semibold uppercase tracking-wider border-b-2 transition-all ${
                       activeLoginTab === 'internal' ? 'border-orange-400 text-orange-400' : 'border-transparent text-slate-500 hover:text-slate-300'
                     }`}
@@ -142,21 +148,7 @@ export default function Index() {
                 </div>
 
                 <form onSubmit={handleLogin} className="space-y-5">
-                  {activeLoginTab === 'client' ? (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-xs font-semibold text-slate-400 font-header uppercase tracking-wider mb-2">Project Access Key</label>
-                        <input
-                          type="password"
-                          placeholder="ENTER ACCESS KEY"
-                          value={accessCode}
-                          onChange={(e) => setAccessCode(e.target.value)}
-                          required
-                          className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm font-mono text-cyan-400 placeholder-slate-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20"
-                        />
-                      </div>
-                    </div>
-                  ) : (
+                  {activeLoginTab === 'internal' && (
                     <div className="space-y-4">
                       <div>
                         <label className="block text-xs font-semibold text-slate-400 font-header uppercase tracking-wider mb-2">Select Team Role</label>
@@ -181,6 +173,22 @@ export default function Index() {
                         />
                       </div>
                     </div>
+                  )}
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-400 font-header uppercase tracking-wider mb-2">Project Access Key</label>
+                    <input
+                      type="password"
+                      placeholder="ENTER ACCESS KEY"
+                      value={accessCode}
+                      onChange={(e) => setAccessCode(e.target.value)}
+                      required
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm font-mono text-cyan-400 placeholder-slate-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20"
+                    />
+                  </div>
+
+                  {loginError && (
+                    <p className="text-red-500 text-xs font-header font-bold uppercase tracking-wider mt-1 text-left">{loginError}</p>
                   )}
 
                   <button

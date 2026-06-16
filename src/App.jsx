@@ -10,6 +10,7 @@ import Insights from './pages/Insights'
 import ClientProgress from './pages/ClientProgress'
 import EnterpriseHub from './pages/EnterpriseHub'
 import DomainGuide from './pages/DomainGuide'
+import BackgroundWallpaper from './components/UI/BackgroundWallpaper'
 import { Plane, Building2, Home, Sparkles, Briefcase, FileText, Globe, Layers, HelpCircle, FileCheck } from 'lucide-react'
 
 function Navbar() {
@@ -136,9 +137,10 @@ function Footer() {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pt-20">
+      <div className="min-h-screen bg-slate-950/20 text-slate-100 flex flex-col pt-20 relative">
+        <BackgroundWallpaper />
         <Navbar />
-        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/projects" element={<AviationProjects />} />
