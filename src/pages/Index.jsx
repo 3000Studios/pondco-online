@@ -150,7 +150,7 @@ export default function Index() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link to="/projects" className="button-3d-cyan text-slate-950 font-bold px-6 py-3 rounded-xl uppercase tracking-wider text-xs flex items-center gap-2">
+              <Link to="/projects" className="button-3d-cyan text-slate-950 font-bold px-8 py-3.5 btn-hexagon uppercase tracking-wider text-xs flex items-center gap-2">
                 <span>Aviation Command Center</span>
                 <ChevronRight size={14} />
               </Link>
@@ -224,7 +224,7 @@ export default function Index() {
                   <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider">{loginError}</p>
                 )}
 
-                <button type="submit" className="w-full button-3d-cyan text-slate-950 font-bold py-2.5 rounded-lg text-xs uppercase tracking-wider">
+                <button type="submit" className="w-full button-3d-cyan text-slate-950 font-bold py-3.5 btn-hexagon text-xs uppercase tracking-wider">
                   Authenticate Portal
                 </button>
               </form>
@@ -238,7 +238,7 @@ export default function Index() {
               <button
                 type="button"
                 onClick={() => setShowGoogleModal(true)}
-                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg border border-slate-700 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_2px_6px_rgba(0,0,0,0.4)]"
+                className="w-full py-3 bg-slate-900 hover:bg-slate-850 text-white font-bold btn-hexagon border border-slate-700 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_2px_6px_rgba(0,0,0,0.4)]"
               >
                 <User size={14} className="text-red-400" />
                 <span>Login with Google Account</span>
@@ -305,6 +305,80 @@ export default function Index() {
                 <p>Direct integration with FAA Joint Acceptance inspection checkpoints. Pre-requisite safety signoffs verified.</p>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Project Delivery Progress Pipeline */}
+      <section className="space-y-6">
+        <div className="text-left border-l-4 border-blue-600 pl-4">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Real-time Milestones</span>
+          <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Project Delivery Progress Pipeline</h2>
+        </div>
+
+        <div className="glass-panel rounded-2xl p-6 md:p-8 shadow-[0_15px_30px_rgba(0,0,0,0.6)] border border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
+            
+            {/* Siting Assessment */}
+            <div className="relative p-4 rounded-xl bg-slate-950/40 border border-blue-900/30 flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono block mb-1">● APPROVED</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Siting Assessment</h3>
+                <p className="text-[11px] text-slate-400 font-serif leading-relaxed mt-1">
+                  Airfield geometry, FAA safety margins, and elevation compliance checks.
+                </p>
+              </div>
+              <span className="text-[10px] text-slate-500 font-mono mt-2">Completed May 10</span>
+            </div>
+
+            {/* Schematic Design */}
+            <div className="relative p-4 rounded-xl bg-slate-950/40 border border-blue-900/30 flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono block mb-1">● APPROVED</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Schematic Design</h3>
+                <p className="text-[11px] text-slate-400 font-serif leading-relaxed mt-1">
+                  Drafting foundational layouts and structural footprint drawings.
+                </p>
+              </div>
+              <span className="text-[10px] text-slate-500 font-mono mt-2">Completed Jun 02</span>
+            </div>
+
+            {/* Design Development */}
+            <div className="relative p-4 rounded-xl bg-slate-950/70 border border-blue-500/40 flex flex-col justify-between space-y-3 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+              <div>
+                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest font-mono block mb-1 animate-pulse">● IN REVIEW</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Design Development</h3>
+                <p className="text-[11px] text-slate-300 font-serif leading-relaxed mt-1">
+                  Comprehensive BIM modeling, detailing and engineering calculations.
+                </p>
+              </div>
+              <span className="text-[10px] text-blue-400 font-mono mt-2 font-bold">Est. Aug 15</span>
+            </div>
+
+            {/* Construction Support */}
+            <div className="relative p-4 rounded-xl bg-slate-950/20 border border-slate-900 flex flex-col justify-between space-y-3 opacity-60">
+              <div>
+                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest font-mono block mb-1">SCHEDULED</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Construction Support</h3>
+                <p className="text-[11px] text-slate-500 font-serif leading-relaxed mt-1">
+                  On-site inspections, quality controls, and compliance monitoring.
+                </p>
+              </div>
+              <span className="text-[10px] text-slate-600 font-mono mt-2">Est. Oct 12</span>
+            </div>
+
+            {/* Commissioning */}
+            <div className="relative p-4 rounded-xl bg-slate-950/20 border border-slate-900 flex flex-col justify-between space-y-3 opacity-60">
+              <div>
+                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest font-mono block mb-1">PENDING</span>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Commissioning</h3>
+                <p className="text-[11px] text-slate-500 font-serif leading-relaxed mt-1">
+                  Final inspections, system handover, and FAA certification support.
+                </p>
+              </div>
+              <span className="text-[10px] text-slate-600 font-mono mt-2">Est. Feb 22</span>
+            </div>
+
           </div>
         </div>
       </section>
