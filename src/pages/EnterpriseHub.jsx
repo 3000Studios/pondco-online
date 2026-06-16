@@ -56,6 +56,13 @@ export default function EnterpriseHub() {
   const [safetyLogDate, setSafetyLogDate] = useState('2026-06-15 08:00 AM')
   const [delinquentLock, setDelinquentLock] = useState(true)
 
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: 'FAA Siting Analysis checklist approved by A/E Director.', time: 'Just now', type: 'info' },
+    { id: 2, text: 'French Valley (F70) cab height target confirmed at 65ft.', time: '12m ago', type: 'success' },
+    { id: 3, text: 'DAILY LOG: Standup sign-offs pending for Sector PM.', time: '1h ago', type: 'warning' },
+    { id: 4, text: 'Seismic concrete structural calculations completed.', time: '3h ago', type: 'info' }
+  ])
+
   // RAG Search state
   const [ragQuery, setRagQuery] = useState('')
   const [ragResult, setRagResult] = useState(null)
@@ -261,7 +268,9 @@ export default function EnterpriseHub() {
       </section>
 
       {/* Main Tab Area */}
-      <div className="min-h-[450px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[450px]">
+        {/* Active tab contents (Col 1-8) */}
+        <div className="lg:col-span-8">
         {/* TAB 1: WIN/LOSS PIPELINE */}
         {activePortalTab === 'pipeline' && (
           <div className="space-y-6">
@@ -566,6 +575,85 @@ export default function EnterpriseHub() {
             </div>
           </div>
         )}
+        </div>
+        
+        {/* Sidebar widgets (Col 9-12): Real-time Alerts & Charts */}
+        <div className="lg:col-span-4 space-y-6">
+          
+          {/* Real-time System Alerts */}
+          <div className="glass-panel rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest font-header">Live Telemetry Feed</h3>
+            <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1">
+              {notifications.map((notif) => (
+                <div key={notif.id} className="p-3 bg-slate-950/70 border border-slate-900 rounded-lg text-[10px] space-y-1">
+                  <div className="flex justify-between items-center">
+                    <span className={`px-2 py-0.5 rounded font-bold uppercase ${
+                      notif.type === 'success' ? 'bg-emerald-950/50 text-emerald-400 border border-emerald-900/30' :
+                      notif.type === 'warning' ? 'bg-amber-950/50 text-amber-400 border border-amber-900/30 animate-pulse' :
+                      'bg-blue-950/50 text-blue-400 border border-blue-900/30'
+                    }`}>
+                      {notif.type}
+                    </span>
+                    <span className="text-slate-600 font-mono">{notif.time}</span>
+                  </div>
+                  <p className="text-slate-300 font-serif leading-relaxed">{notif.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Real-time Material Workloads */}
+          <div className="glass-panel rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest font-header">Material Sprints &amp; Workload</h3>
+            
+            <div className="space-y-4">
+              {/* Concrete */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] uppercase font-bold text-slate-400">
+                  <span>FAA-STD-008 Concrete Foundations</span>
+                  <span className="text-white">85%</span>
+                </div>
+                <div className="w-full bg-slate-950 rounded-full h-1.5 border border-slate-900 overflow-hidden">
+                  <div className="bg-blue-600 h-full rounded-full" style={{ width: '85%' }} />
+                </div>
+              </div>
+
+              {/* Steel */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] uppercase font-bold text-slate-400">
+                  <span>Seismic Framing Steel</span>
+                  <span className="text-white">60%</span>
+                </div>
+                <div className="w-full bg-slate-950 rounded-full h-1.5 border border-slate-900 overflow-hidden">
+                  <div className="bg-orange-500 h-full rounded-full" style={{ width: '60%' }} />
+                </div>
+              </div>
+
+              {/* Comms */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] uppercase font-bold text-slate-400">
+                  <span>Cab Outfitting / Comms Room</span>
+                  <span className="text-white">42%</span>
+                </div>
+                <div className="w-full bg-slate-950 rounded-full h-1.5 border border-slate-900 overflow-hidden">
+                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '42%' }} />
+                </div>
+              </div>
+
+              {/* Laser */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] uppercase font-bold text-slate-400">
+                  <span>Airspace Laser Telemetry</span>
+                  <span className="text-white">90%</span>
+                </div>
+                <div className="w-full bg-slate-950 rounded-full h-1.5 border border-slate-900 overflow-hidden">
+                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: '90%' }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   )

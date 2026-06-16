@@ -141,3 +141,52 @@
 .beacon-active {
   animation: beacon-blink 1.5s infinite ease-in-out;
 }
+
+/* Dynamic page-specific cursor spotlights */
+.cursor-glow-home {
+  background: radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), rgba(30, 58, 138, 0.15), transparent 80%);
+  pointer-events: none;
+}
+.cursor-glow-projects {
+  background: radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 80%);
+  pointer-events: none;
+}
+.cursor-glow-services {
+  background: radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12), transparent 80%);
+  pointer-events: none;
+}
+.cursor-glow-hub {
+  background: radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), rgba(249, 115, 22, 0.12), transparent 80%);
+  pointer-events: none;
+}
+
+/* 3D Raised Corporate Heading style */
+.text-raised-hd {
+  text-shadow: 0 1px 0 #1e293b, 
+               0 2px 0 #0f172a, 
+               0 3px 2px rgba(0, 0, 0, 0.8),
+               0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Animations */
+@keyframes fade-in-out {
+  0%, 100% { opacity: 0.6; transform: scale(0.99); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in-out {
+  animation: fade-in-out 6s ease-in-out infinite;
+}
+
+@keyframes slide-in-header {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-header {
+  animation: slide-in-header 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

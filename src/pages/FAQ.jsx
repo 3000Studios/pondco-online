@@ -1,61 +1,181 @@
-import React from 'react'
-import { HelpCircle, ShieldAlert } from 'lucide-react'
+import React, { useState } from 'react'
+import { HelpCircle, ChevronDown, ChevronUp, Link as LinkIcon, ShieldCheck } from 'lucide-react'
 
 export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState(null)
+  const [selectedTopic, setSelectedTopic] = useState(null)
+
   const faqs = [
-    { q: 'What does Pondco.online provide?', a: 'Pondco.online functions as the digital operating and presentation layer for Pond & Company\'s structural architecture, airfield design, and SaaS-based project controls.' },
-    { q: 'How does the Client Portal progress tracker work?', a: 'Clients log in with a unique Project Access Key provided in their Service Agreement, granting secure, high-level views of milestone timelines and deliverables without exposing internal hours or risk registers.' },
-    { q: 'What are the two airport control tower contracts?', a: 'Pond was awarded the architectural and engineering design for towers at French Valley Airport (F70) in Murrieta, CA, and Jacqueline Cochran Regional Airport (TRM) in Thermal, CA, under the FAA Federal Contract Tower Program.' }
+    { 
+      q: 'What does Pondco.online provide?', 
+      a: 'Pondco.online functions as the digital operating and presentation layer for Pond & Company\'s structural architecture, airfield design, and SaaS-based project controls. It unifies multidisciplinary logistics, BIM modeling coordination, and client-facing progress telemetry.',
+      detail: {
+        title: 'Core Deliverables Scope',
+        content: 'Our core services are segmented into Aviation Planning, Structural Layout BIM coordination, and real-time scheduling telemetry. The platform enables multi-tier project tracking and complies strictly with FAA-STD-008 flight safety guidelines.',
+        suppliers: ['Pond Integrated A/E Dev', 'KSA Engineering Associate Group'],
+        materials: ['Revit Cloud Integration', 'RAG Telemetry Server DB']
+      }
+    },
+    { 
+      q: 'How does the Client Portal progress tracker work?', 
+      a: 'Clients log in with a unique Project Access Key provided in their Service Agreement, granting secure, high-level views of milestone timelines and deliverables without exposing internal hours or risk registers.',
+      detail: {
+        title: 'Client Progress Security Gates',
+        content: 'Access is controlled using advanced client hashes and role-clearances. It visualizes the current milestones without showing internal sprint blockers or subconsultant risk matrices.',
+        suppliers: ['Riverside County Aviation Board', 'FAA Regional Inspectors'],
+        materials: ['Secure Key Encryption Hashing', 'Cloudflare Pages CDN Cache']
+      }
+    },
+    { 
+      q: 'What are the two airport control tower contracts?', 
+      a: 'Pond was awarded the architectural and engineering design for towers at French Valley Airport (F70) in Murrieta, CA, and Jacqueline Cochran Regional Airport (TRM) in Thermal, CA, under the FAA Federal Contract Tower Program.',
+      detail: {
+        title: 'ATCT California Contracts',
+        content: 'Design tasks include line-of-sight studies, concrete foundation framing designs, structural seismic compliance (Zone 4), and FAA communications room outfitting schematics.',
+        suppliers: ['KSA Civil Site Team', 'Coachella Valley Contractors'],
+        materials: ['FAA-STD-008 Compliant Cab Glass', 'High-Strength Galvanized Steel Trusses']
+      }
+    }
   ]
+
+  const toggleFaq = (index) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
 
   return (
     <div className="space-y-12 max-w-5xl mx-auto py-6 font-header animate-slide-in">
-      {/* Dynamic Hero Video Underlayment (Query Help Bubble / Signal Wave Telemetry) */}
-      <div className="relative rounded-3xl overflow-hidden glass-panel-accent p-8 min-h-[200px] flex items-center shadow-xl border border-slate-800">
-        <div className="absolute inset-0 z-0 bg-[#081a38] opacity-50">
-          <div className="absolute inset-0 bg-repeat-x opacity-20 pointer-events-none" style={{
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200"><path d="M0 100 Q200 40 400 100 T800 100" fill="none" stroke="cyan" stroke-width="1.5" stroke-dasharray="10,5"/></svg>')`
-          }} />
-        </div>
+      
+      {/* Hero with Autoplay video background */}
+      <div className="relative rounded-3xl overflow-hidden glass-panel p-8 min-h-[220px] flex items-center shadow-2xl border border-slate-800/80">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.25]"
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-airport-terminal-with-passengers-running-around-42657-large.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-0" />
         
         <div className="z-10 space-y-2">
-          <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block">Operational FAQ</span>
-          <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-wider">Frequently Asked Questions</h1>
-          <p className="text-xs text-slate-400 font-serif max-w-md">Public information, compliance standards, and portal integration details.</p>
+          <span className="text-xs font-bold text-blue-400 uppercase tracking-widest block animate-pulse">Operational FAQ Portal</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-wider text-raised-hd">Frequently Asked Questions</h1>
+          <p className="text-xs text-slate-300 font-serif max-w-md">Public information, compliance standards, and portal integration details.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Side: FAQs (Col 1-8) */}
-        <div className="lg:col-span-8 space-y-6">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="glass-panel rounded-2xl p-6 space-y-2 hover:border-cyan-500/30 transition-all shadow-lg">
-              <h3 className="text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                <HelpCircle size={16} className="text-cyan-400" />
-                {faq.q}
-              </h3>
-              <p className="text-xs text-slate-400 font-serif leading-relaxed pl-6">{faq.a}</p>
-            </div>
-          ))}
+        {/* Left Side: FAQs Accordion (Col 1-8) */}
+        <div className="lg:col-span-8 space-y-4">
+          {faqs.map((faq, idx) => {
+            const isOpen = openIndex === idx
+            return (
+              <div 
+                key={idx} 
+                className={`glass-panel rounded-2xl p-5 border transition-all duration-300 shadow-md ${
+                  isOpen ? 'border-blue-500/40 bg-slate-900/60' : 'border-slate-800/60 hover:border-blue-500/20'
+                }`}
+              >
+                <button 
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full flex justify-between items-center text-left text-sm font-bold text-white uppercase tracking-wide focus:outline-none"
+                >
+                  <span className="flex items-center gap-2">
+                    <HelpCircle size={16} className="text-blue-400 flex-shrink-0" />
+                    {faq.q}
+                  </span>
+                  {isOpen ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+                </button>
+                
+                {isOpen && (
+                  <div className="mt-3 pl-6 space-y-3 animate-slide-in">
+                    <p className="text-xs text-slate-300 font-serif leading-relaxed">{faq.a}</p>
+                    <button 
+                      onClick={() => setSelectedTopic(faq)}
+                      className="inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-400 uppercase tracking-wider hover:text-blue-300 transition-colors"
+                    >
+                      <LinkIcon size={10} />
+                      <span>Explore Topic Specifications &amp; Suppliers</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
 
-        {/* Right Side: Unique Page Picture/Illustration (Col 9-12) */}
+        {/* Right Side: Compliance video loop & quick card (Col 9-12) */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="glass-panel rounded-2xl p-6 space-y-4 border border-slate-800 shadow-xl text-center">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">FAA Compliance Schema</h3>
-            {/* Unique illustration SVG */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-900 flex justify-center">
-              <svg className="w-full h-32 text-orange-400/80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
-                <circle cx="50" cy="50" r="35" stroke="cyan" />
-                <path d="M50 15 L50 85 M15 50 L85 50" strokeDasharray="3,3" />
-                <polygon points="50,25 55,45 75,50 55,55 50,75 45,55 25,50 45,45" fill="none" stroke="amber" />
-              </svg>
+          <div className="glass-panel rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider">FAA Siting Compliance</h3>
+            
+            {/* Auto play mini loop */}
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-slate-900 relative">
+              <video 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                className="w-full h-full object-cover opacity-65"
+              >
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-cyber-security-system-scanning-screen-42352-large.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
             </div>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Visual clearance boundaries</p>
+
+            <div className="space-y-2 text-xs font-serif text-slate-400 leading-relaxed">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                <ShieldCheck size={12} />
+                <span>Verified System Standard</span>
+              </div>
+              <p>All design procedures conform strictly to FAA Order 6480.7D rules for airport traffic control tower elevations.</p>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Details Modal */}
+      {selectedTopic && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md px-4">
+          <div className="glass-panel rounded-3xl p-6 max-w-md w-full border border-slate-800 space-y-6 shadow-2xl relative text-left animate-slide-in">
+            <div>
+              <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest font-mono block mb-1">SPECIFICATION MATRIX</span>
+              <h3 className="text-lg font-black text-white uppercase tracking-wider">{selectedTopic.detail.title}</h3>
+            </div>
+            
+            <p className="text-xs text-slate-300 font-serif leading-relaxed">{selectedTopic.detail.content}</p>
+            
+            <div className="space-y-3 border-t border-slate-900 pt-4">
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Key Partners / Suppliers</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedTopic.detail.suppliers.map((s, idx) => (
+                    <span key={idx} className="text-[9px] font-bold text-white bg-blue-950 px-2 py-0.5 rounded border border-blue-900/40 uppercase">{s}</span>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Core Tech &amp; Materials</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedTopic.detail.materials.map((m, idx) => (
+                    <span key={idx} className="text-[9px] font-bold text-white bg-slate-950 px-2 py-0.5 rounded border border-slate-900 uppercase">{m}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setSelectedTopic(null)}
+              className="w-full button-3d-cyan text-white font-bold py-2.5 btn-hexagon text-xs uppercase tracking-wider block text-center"
+            >
+              Close Detail Panel
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Sparkles, Clock, CloudSun, ShieldAlert, ChevronRight, Play, Eye, ShieldCheck, Lock, Activity, Bot, Send, User, Building, Landmark, Compass, Plane, Shield } from 'lucide-react'
-import { app } from '../firebase'
+import { Sparkles, Clock, CloudSun, ChevronRight, Lock, User, Plane, Compass, Building, Shield, FileText, CheckCircle2 } from 'lucide-react'
 
 export default function Index() {
   const navigate = useNavigate()
@@ -14,8 +13,10 @@ export default function Index() {
   const [loginError, setLoginError] = useState('')
   const [showGoogleModal, setShowGoogleModal] = useState(false)
   const [showLoginModal, setShowLoginModal] = useState(false)
-  const [hoveredCard, setHoveredCard] = useState(null)
   
+  // Modals for zero dead links
+  const [activeModalData, setActiveModalData] = useState(null)
+
   // Weather state (serving local visitor dynamically)
   const [weather, setWeather] = useState({ temp: '102°F', location: 'Coachella Valley, CA', status: 'Sunny' })
 
@@ -87,13 +88,18 @@ export default function Index() {
     navigate('/hub')
   }
 
+  // Real data schemas to show on details modals
+  const openDetailsModal = (type, title, content, details) => {
+    setActiveModalData({ type, title, content, details })
+  }
+
   return (
     <div className="space-y-16 animate-slide-in relative">
       
       {/* Dynamic Local Weather & Time Header Bar */}
       <div className="flex justify-between items-center bg-slate-900/60 border border-slate-800/80 px-6 py-3.5 rounded-2xl backdrop-blur-md text-xs font-header shadow-lg">
         <div className="flex items-center space-x-2 text-slate-400">
-          <Sparkles size={14} className="text-amber-500 animate-pulse" />
+          <Sparkles size={14} className="text-blue-400 animate-pulse" />
           <span>FAA Federal Infrastructure Partner</span>
         </div>
         <div className="flex items-center space-x-6">
@@ -115,19 +121,26 @@ export default function Index() {
         <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left p-8 md:p-12 rounded-3xl glass-panel relative overflow-hidden shadow-2xl border border-slate-800/60">
           <div className="absolute inset-0 bg-[#061430]/10 opacity-30 pointer-events-none" />
           
-          <h1 className="text-4xl sm:text-5xl font-black text-white uppercase tracking-tight leading-none">
+          <h1 className="text-4xl sm:text-5xl font-black text-white uppercase tracking-tight leading-none text-raised-hd animate-slide-header">
             Delivering Excellence in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Aviation &amp; Government</span> Infrastructure
           </h1>
           
-          <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl font-serif">
+          <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl font-serif animate-fade-in-out">
             Pondco Online: innovating design, engineering, and project management for critical public sector facilities.
           </p>
           
           <div className="flex flex-wrap gap-4 pt-4">
-            <Link to="/services" className="button-3d-cyan text-white font-bold px-8 py-3.5 btn-hexagon uppercase tracking-wider text-xs flex items-center gap-2">
+            <button 
+              onClick={() => openDetailsModal('services', 'Comprehensive A/E Services', 'Pondco unifies multidisciplinary architectural modeling and control workflows to construct state-of-the-art airports and towers.', {
+                workloads: 'Active contracts: French Valley Siting, Cochran Cab Outfitting, ATL Runway Planning',
+                suppliers: 'Aviation Lead Planners, KSA Site Engineering Group, FAA Regional Equipment Inspectors',
+                materials: 'Revit CAD Database, Structural Steel, FAA Cab Glazing Specifications'
+              })}
+              className="button-3d-cyan text-white font-bold px-8 py-3.5 btn-hexagon uppercase tracking-wider text-xs flex items-center gap-2"
+            >
               <span>View Our Services</span>
               <ChevronRight size={14} />
-            </Link>
+            </button>
             <button 
               onClick={() => setShowLoginModal(true)}
               className="button-3d-orange text-white font-bold px-8 py-3.5 btn-hexagon uppercase tracking-wider text-xs flex items-center gap-2"
@@ -150,16 +163,18 @@ export default function Index() {
               ATL International Terminal Expansion
             </h3>
             
-            {/* Terminal Image Placeholder */}
+            {/* Autoplay Video Loop instead of static image */}
             <div className="w-full h-44 rounded-xl overflow-hidden my-3 bg-slate-950 border border-slate-900 relative">
-              <div className="absolute inset-0 bg-[#0f172a] flex items-center justify-center opacity-40">
-                <Plane size={48} className="text-blue-950/80 rotate-45" />
-              </div>
-              <img 
-                src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80" 
-                alt="ATL Terminal" 
-                className="w-full h-full object-cover opacity-75 hover:scale-105 transition-transform duration-700" 
-              />
+              <video 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                className="w-full h-full object-cover opacity-80"
+              >
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-flying-airplane-41851-large.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-blue-950/10 mix-blend-multiply" />
             </div>
             
             <p className="text-xs text-slate-400 font-serif leading-relaxed">
@@ -167,15 +182,22 @@ export default function Index() {
             </p>
           </div>
 
-          <Link to="/projects" className="button-3d-cyan text-white text-center font-bold py-3.5 btn-hexagon text-xs uppercase tracking-wider block">
+          <button 
+            onClick={() => openDetailsModal('spotlight', 'ATL Terminal Expansion Specifications', 'Structural engineering blueprints for Atlanta terminal concourse concourse upgrades including 35 active gates.', {
+              workloads: 'Design Development Sprint 14, Structural Compliance verification, Airfield Safety Clearance checks',
+              suppliers: 'Pond & Company A/E Team, Hartsfield-Jackson Airport Board, FAA Program Directors',
+              materials: 'Heavy Galvanized Structural Columns, Bulletproof Terminal Glass, Integrated Comms Cabling'
+            })}
+            className="button-3d-cyan text-white text-center font-bold py-3.5 btn-hexagon text-xs uppercase tracking-wider block w-full"
+          >
             Learn More
-          </Link>
+          </button>
         </div>
 
       </div>
 
       {/* Project Delivery Progress Pipeline */}
-      <section className="space-y-6">
+      <section className="space-y-6 animate-slide-header">
         <div className="text-left border-l-4 border-blue-600 pl-4">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Real-time Milestones</span>
           <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Project Delivery Progress Pipeline</h2>
@@ -193,7 +215,7 @@ export default function Index() {
                   Airfield geometry, FAA safety margins, and elevation compliance checks.
                 </p>
               </div>
-              <span className="text-[10px] text-slate-500 font-mono mt-2">Completed May 10</span>
+              <span className="text-[10px] text-slate-500 font-mono mt-2 font-bold">Completed May 10</span>
             </div>
 
             {/* Schematic Design */}
@@ -205,7 +227,7 @@ export default function Index() {
                   Drafting foundational layouts and structural footprint drawings.
                 </p>
               </div>
-              <span className="text-[10px] text-slate-500 font-mono mt-2">Completed Jun 02</span>
+              <span className="text-[10px] text-slate-500 font-mono mt-2 font-bold">Completed Jun 02</span>
             </div>
 
             {/* Design Development */}
@@ -229,7 +251,7 @@ export default function Index() {
                   On-site inspections, quality controls, and compliance monitoring.
                 </p>
               </div>
-              <span className="text-[10px] text-slate-600 font-mono mt-2">Est. Oct 12</span>
+              <span className="text-[10px] text-slate-600 font-mono mt-2 font-bold">Est. Oct 12</span>
             </div>
 
             {/* Commissioning */}
@@ -241,7 +263,7 @@ export default function Index() {
                   Final inspections, system handover, and FAA certification support.
                 </p>
               </div>
-              <span className="text-[10px] text-slate-600 font-mono mt-2">Est. Feb 22</span>
+              <span className="text-[10px] text-slate-600 font-mono mt-2 font-bold">Est. Feb 22</span>
             </div>
 
           </div>
@@ -261,7 +283,14 @@ export default function Index() {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               
-              <div className="space-y-2">
+              <div 
+                onClick={() => openDetailsModal('service-arch', 'Aviation Architecture Specifications', 'Aviation architectural structures representing high load compliant materials, FAA order controls, and line of sight elevation configurations.', {
+                  workloads: 'Tower cab heights, terminal gates layouts, runway orientations',
+                  suppliers: 'Pond Integrated Architecture, FAA Joint Acceptance Inspectors',
+                  materials: 'Anti-reflective heavy cab glazing, reinforced concrete framing'
+                })}
+                className="space-y-2 cursor-pointer p-3 rounded-xl hover:bg-slate-950/40 border border-transparent hover:border-blue-900/35 transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-blue-950/50 border border-blue-800/40 flex items-center justify-center text-blue-400">
                   <Plane size={20} />
                 </div>
@@ -271,7 +300,14 @@ export default function Index() {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div 
+                onClick={() => openDetailsModal('service-civil', 'Civil Engineering Specifications', 'Structural foundations modeling, seismic safety reports, concrete load bearings, and terrain grading controls.', {
+                  workloads: 'FAA foundation assessments, runway taxiways grading blueprints',
+                  suppliers: 'KSA Civil Engineering, Pape-Dawson structural subconsultants',
+                  materials: 'Grade 60 structural rebar, high-strength concrete mixes'
+                })}
+                className="space-y-2 cursor-pointer p-3 rounded-xl hover:bg-slate-950/40 border border-transparent hover:border-blue-900/35 transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-blue-950/50 border border-blue-800/40 flex items-center justify-center text-blue-400">
                   <Compass size={20} />
                 </div>
@@ -281,7 +317,14 @@ export default function Index() {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div 
+                onClick={() => openDetailsModal('service-pm', 'Program Management Framework', 'Coordinating design submittals, managing daily logs, standups, and milestone progress pipelines.', {
+                  workloads: 'Riverside County design submittals, FAA milestone review sprints',
+                  suppliers: 'Pond PM Team, FAA Central Regional Command',
+                  materials: 'Active Scrum Workspace logs, BIM 360 cloud databases'
+                })}
+                className="space-y-2 cursor-pointer p-3 rounded-xl hover:bg-slate-950/40 border border-transparent hover:border-blue-900/35 transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-blue-950/50 border border-blue-800/40 flex items-center justify-center text-blue-400">
                   <Building size={20} />
                 </div>
@@ -291,7 +334,14 @@ export default function Index() {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div 
+                onClick={() => openDetailsModal('service-security', 'Security Systems Architecture', 'Automating airfield security parameters, biometric locks, radar tracking systems, and terminal controls.', {
+                  workloads: 'Secure perimeter gates design, terminal server RAG routing portals',
+                  suppliers: 'Department of Homeland Security, TSA terminal control systems',
+                  materials: 'Fiber-optic security cameras, biometric scanners, automated barriers'
+                })}
+                className="space-y-2 cursor-pointer p-3 rounded-xl hover:bg-slate-950/40 border border-transparent hover:border-blue-900/35 transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-blue-950/50 border border-blue-800/40 flex items-center justify-center text-blue-400">
                   <Shield size={20} />
                 </div>
@@ -326,13 +376,25 @@ export default function Index() {
           <div className="space-y-6">
             
             {/* Story 1 */}
-            <div className="group space-y-3 border-b border-slate-900 pb-6 last:border-b-0 last:pb-0">
+            <div 
+              onClick={() => openDetailsModal('newark', 'Newark Terminal B Upgrades', 'Design and structural engineering for a 35-gate expansion, optimizing passenger flow and security controls.', {
+                workloads: 'BIM Concourse coordination complete, seismic frame approved',
+                suppliers: 'Newark Port Authority, Metropolitan A/E Partners',
+                materials: 'Seismic Dampeners, High-efficiency HVAC ductwork, structural glazing'
+              })}
+              className="group space-y-3 border-b border-slate-900 pb-6 last:border-b-0 last:pb-0 cursor-pointer"
+            >
               <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-slate-900 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=500&q=80" 
-                  alt="Newark Terminal B" 
-                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" 
-                />
+                <video 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+                >
+                  <source src="https://assets.mixkit.co/videos/preview/mixkit-airport-terminal-with-passengers-running-around-42657-large.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
               </div>
               <h3 className="text-base font-bold text-white uppercase tracking-wide group-hover:text-blue-400 transition-colors">Newark Terminal B</h3>
               <p className="text-xs text-slate-400 font-serif leading-relaxed">
@@ -341,17 +403,29 @@ export default function Index() {
             </div>
 
             {/* Story 2 */}
-            <div className="group space-y-3">
+            <div 
+              onClick={() => openDetailsModal('dfw', 'DFW Runway Rehab Program', 'Extending airfield runway surfaces and outfitting safety beacons and landing instrumentation.', {
+                workloads: 'Runway taxiway grading complete, lighting installation in progress',
+                suppliers: 'DFW Airport Operations, Federal Highway Administration',
+                materials: 'High-density asphalt, LED runway lighting, precision GPS beacons'
+              })}
+              className="group space-y-3 cursor-pointer"
+            >
               <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-slate-900 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=500&q=80" 
-                  alt="DFW Runway Rehab" 
-                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" 
-                />
+                <video 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+                >
+                  <source src="https://assets.mixkit.co/videos/preview/mixkit-runway-of-an-airport-from-a-landing-plane-42658-large.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
               </div>
               <h3 className="text-base font-bold text-white uppercase tracking-wide group-hover:text-blue-400 transition-colors">DFW Runway Rehab</h3>
               <p className="text-xs text-slate-400 font-serif leading-relaxed">
-                Comprehensive design and structural engineering for a 35-gate expansion, optimizing runways and airfield taxiways.
+                Comprehensive design and structural engineering for concourse taxiways and runway grading.
               </p>
             </div>
 
@@ -360,9 +434,47 @@ export default function Index() {
 
       </div>
 
+      {/* Details Modal (Eliminates dead links) */}
+      {activeModalData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md px-4">
+          <div className="glass-panel rounded-3xl p-6 max-w-md w-full border border-slate-800 space-y-6 shadow-2xl relative text-left animate-slide-header">
+            <div>
+              <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest font-mono block mb-1">SPECIFICATION MATRIX</span>
+              <h3 className="text-lg font-black text-white uppercase tracking-wider">{activeModalData.title}</h3>
+            </div>
+            
+            <p className="text-xs text-slate-300 font-serif leading-relaxed">{activeModalData.content}</p>
+            
+            <div className="space-y-3 border-t border-slate-900 pt-4">
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Workloads &amp; Sprints</span>
+                <p className="text-xs text-slate-300 font-serif">{activeModalData.details.workloads}</p>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Key Partners / Suppliers</span>
+                <p className="text-xs text-slate-300 font-serif">{activeModalData.details.suppliers}</p>
+              </div>
+              
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Core Tech &amp; Materials</span>
+                <p className="text-xs text-slate-300 font-serif">{activeModalData.details.materials}</p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setActiveModalData(null)}
+              className="w-full button-3d-cyan text-white font-bold py-2.5 btn-hexagon text-xs uppercase tracking-wider block text-center"
+            >
+              Close Detail Panel
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Auth Modals */}
       {showLoginModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md px-4">
           <div className="glass-panel rounded-3xl p-6 max-w-sm w-full border border-slate-800 space-y-4 shadow-2xl relative text-left">
             <div className="flex border-b border-slate-800 mb-2 font-header text-xs">
               <button
@@ -459,8 +571,8 @@ export default function Index() {
       )}
 
       {showGoogleModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
-          <div className="glass-panel rounded-3xl p-8 max-w-sm w-full border border-slate-800 space-y-6 text-center shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md px-4">
+          <div className="glass-panel rounded-3xl p-8 max-w-sm w-full border border-slate-800 space-y-6 text-center shadow-2xl relative animate-slide-header">
             <h3 className="text-lg font-black text-white uppercase tracking-wider">Choose Google Account</h3>
             <p className="text-xs text-slate-400 font-serif">Select an identity to authenticate into Pondco.online:</p>
             
