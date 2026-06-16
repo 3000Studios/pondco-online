@@ -54,7 +54,7 @@ export default function FAQ() {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover opacity-[0.25]"
         >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-airport-terminal-with-passengers-running-around-42657-large.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/42657/42657-360.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-0" />
         
@@ -119,7 +119,7 @@ export default function FAQ() {
                 playsInline 
                 className="w-full h-full object-cover opacity-65"
               >
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-cyber-security-system-scanning-screen-42352-large.mp4" type="video/mp4" />
+                <source src="https://assets.mixkit.co/videos/42352/42352-360.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
             </div>

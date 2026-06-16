@@ -20,12 +20,16 @@ export default function ClientProgress() {
   return (
     <div className="space-y-12 max-w-5xl mx-auto py-6 animate-slide-in">
       {/* Dynamic Hero Video Underlayment (Vertical data feed/timeline glow) */}
-      <div className="relative rounded-3xl overflow-hidden glass-panel-accent p-8 min-h-[200px] flex items-center shadow-xl border border-slate-800">
-        <div className="absolute inset-0 z-0 bg-[#0d2a20] opacity-45">
-          <div className="absolute inset-0 bg-repeat-x opacity-25 pointer-events-none" style={{
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200"><line x1="100" y1="0" x2="100" y2="200" stroke="emerald" stroke-width="1"/><line x1="300" y1="0" x2="300" y2="200" stroke="emerald" stroke-width="1"/><circle cx="100" cy="80" r="5" fill="cyan" /><circle cx="300" cy="140" r="5" fill="white" className="animate-ping"/></svg>')`
-          }} />
-        </div>
+      <div className="relative rounded-3xl overflow-hidden glass-panel p-8 min-h-[200px] flex items-center shadow-xl border border-slate-800">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.25]"
+        >
+          <source src="https://assets.mixkit.co/videos/42861/42861-360.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-0" />
         
         <div className="z-10 space-y-2">

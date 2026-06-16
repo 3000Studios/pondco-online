@@ -172,7 +172,7 @@ export default function Index() {
                 playsInline 
                 className="w-full h-full object-cover opacity-80"
               >
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-flying-airplane-41851-large.mp4" type="video/mp4" />
+                <source src="https://assets.mixkit.co/videos/41851/41851-360.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-blue-950/10 mix-blend-multiply" />
             </div>
@@ -392,7 +392,7 @@ export default function Index() {
                   playsInline 
                   className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                 >
-                  <source src="https://assets.mixkit.co/videos/preview/mixkit-airport-terminal-with-passengers-running-around-42657-large.mp4" type="video/mp4" />
+                  <source src="https://assets.mixkit.co/videos/42657/42657-360.mp4" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
               </div>
@@ -419,7 +419,7 @@ export default function Index() {
                   playsInline 
                   className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                 >
-                  <source src="https://assets.mixkit.co/videos/preview/mixkit-runway-of-an-airport-from-a-landing-plane-42658-large.mp4" type="video/mp4" />
+                  <source src="https://assets.mixkit.co/videos/42658/42658-360.mp4" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
               </div>
