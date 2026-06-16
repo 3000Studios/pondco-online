@@ -28,7 +28,7 @@ export default function ClientProgress() {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover opacity-[0.25]"
         >
-          <source src="https://assets.mixkit.co/videos/42861/42861-360.mp4" type="video/mp4" />
+          <source src="https://raw.githubusercontent.com/maitrix-org/easyweb/master/easyweb-flight.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-0" />
         

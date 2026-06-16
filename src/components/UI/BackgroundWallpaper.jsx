@@ -9,21 +9,21 @@ export default function BackgroundWallpaper() {
   const getVideoUrl = (path) => {
     switch (path) {
       case '/':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-commercial-airplane-taking-off-at-sunset-14022-large.mp4'
+        return 'https://raw.githubusercontent.com/noorkhokhar99/yolo-object-detect/main/airport.mp4'
       case '/projects':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-flying-airplane-41851-large.mp4'
+        return 'https://raw.githubusercontent.com/m-belefqih/Optical-Flow-Lucas-Kanade/main/airplane.mp4'
       case '/services':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-airport-terminal-with-passengers-running-around-42657-large.mp4'
+        return 'https://raw.githubusercontent.com/noorkhokhar99/yolo-object-detect/main/airport.mp4'
       case '/markets':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-map-of-the-earth-42171-large.mp4'
+        return 'https://raw.githubusercontent.com/maitrix-org/easyweb/master/easyweb-flight.mp4'
       case '/portfolio':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-runway-of-an-airport-from-a-landing-plane-42658-large.mp4'
+        return 'https://raw.githubusercontent.com/m-belefqih/Optical-Flow-Lucas-Kanade/main/airplane.mp4'
       case '/client':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-digital-network-connections-background-loop-42861-large.mp4'
+        return 'https://raw.githubusercontent.com/maitrix-org/easyweb/master/easyweb-flight.mp4'
       case '/hub':
-        return 'https://assets.mixkit.co/videos/preview/mixkit-cyber-security-system-scanning-screen-42352-large.mp4'
+        return 'https://raw.githubusercontent.com/noorkhokhar99/yolo-object-detect/main/airport.mp4'
       default:
-        return 'https://assets.mixkit.co/videos/preview/mixkit-commercial-airplane-taking-off-at-sunset-14022-large.mp4'
+        return 'https://raw.githubusercontent.com/noorkhokhar99/yolo-object-detect/main/airport.mp4'
     }
   }
 
