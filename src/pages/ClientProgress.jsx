@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CheckCircle2, AlertTriangle, ShieldCheck, Mail, Calendar, Compass, ArrowRight } from 'lucide-react'
+import { AlertTriangle, ShieldCheck, Mail, Calendar, Compass, ArrowRight } from 'lucide-react'
 
 export default function ClientProgress() {
   const milestones = [
@@ -18,43 +18,45 @@ export default function ClientProgress() {
   ]
 
   return (
-    <div className="space-y-12 max-w-5xl mx-auto py-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-900 pb-6 gap-4">
-        <div>
-          <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest block font-header">Secure Client Portal</span>
-          <h1 className="text-3xl font-black text-white font-header uppercase tracking-wider">Project Delivery Progress</h1>
-          <p className="text-xs text-slate-400 mt-1">Real-time status updates and milestone metrics for California ATCT Contracts.</p>
+    <div className="space-y-12 max-w-5xl mx-auto py-6 animate-slide-in">
+      {/* Dynamic Hero Video Underlayment (Vertical data feed/timeline glow) */}
+      <div className="relative rounded-3xl overflow-hidden glass-panel-accent p-8 min-h-[200px] flex items-center shadow-xl border border-slate-800">
+        <div className="absolute inset-0 z-0 bg-[#0d2a20] opacity-45">
+          <div className="absolute inset-0 bg-repeat-x opacity-25 pointer-events-none" style={{
+            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200"><line x1="100" y1="0" x2="100" y2="200" stroke="emerald" stroke-width="1"/><line x1="300" y1="0" x2="300" y2="200" stroke="emerald" stroke-width="1"/><circle cx="100" cy="80" r="5" fill="cyan" /><circle cx="300" cy="140" r="5" fill="white" className="animate-ping"/></svg>')`
+          }} />
         </div>
-
-        <div className="flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>SSO Verified Session</span>
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-0" />
+        
+        <div className="z-10 space-y-2">
+          <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block">Secure Client Portal</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-wider">Project Delivery Progress</h1>
+          <p className="text-xs text-slate-400 font-serif max-w-md">Real-time status updates and milestone metrics for California ATCT Contracts.</p>
         </div>
       </div>
 
       {/* Overview stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-panel rounded-2xl p-6 shadow-lg">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block font-header mb-1">Contract Status</span>
           <span className="text-xl font-bold font-header text-white uppercase flex items-center gap-1.5">
             <ShieldCheck size={18} className="text-emerald-400" /> Active Delivery
           </span>
         </div>
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-panel rounded-2xl p-6 shadow-lg">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block font-header mb-1">Current Phase</span>
           <span className="text-xl font-bold font-header text-white uppercase">Design Development</span>
         </div>
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-panel rounded-2xl p-6 shadow-lg">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block font-header mb-1">Overall Completion</span>
-          <span className="text-xl font-bold font-header text-cyan-400">42%</span>
+          <span className="text-xl font-bold font-header text-cyan-400 font-mono">42%</span>
         </div>
       </div>
 
       {/* Progress timeline grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         {/* Milestones timeline (Col 1-8) */}
-        <div className="md:col-span-8 glass-panel rounded-2xl p-8 space-y-6">
+        <div className="md:col-span-8 glass-panel rounded-2xl p-8 space-y-6 shadow-xl">
           <h3 className="text-lg font-bold text-white font-header uppercase tracking-wider border-b border-slate-900 pb-3">Delivery Sprints &amp; Milestones</h3>
           
           <div className="space-y-6 relative border-l border-slate-900 pl-6 ml-3">
@@ -63,7 +65,6 @@ export default function ClientProgress() {
               const isInReview = item.status === 'In Review'
               return (
                 <div key={index} className="relative">
-                  {/* Circle indicator */}
                   <span className={`absolute -left-[31px] top-1 w-4.5 h-4.5 rounded-full border-4 border-slate-950 flex items-center justify-center ${
                     isApproved ? 'bg-emerald-500' : isInReview ? 'bg-amber-500 animate-pulse' : 'bg-slate-800'
                   }`} />
@@ -92,7 +93,7 @@ export default function ClientProgress() {
 
         {/* Leadership & contacts (Col 9-12) */}
         <div className="md:col-span-4 space-y-6">
-          <div className="glass-panel rounded-2xl p-6 space-y-4">
+          <div className="glass-panel rounded-2xl p-6 space-y-4 shadow-xl">
             <h3 className="text-sm font-bold text-white font-header uppercase tracking-wider border-b border-slate-900 pb-3">Project Leadership</h3>
             
             <div className="space-y-4">
@@ -109,16 +110,17 @@ export default function ClientProgress() {
             </div>
           </div>
 
-          {/* Client Action items */}
-          <div className="glass-panel rounded-2xl p-6 space-y-3 font-header text-xs">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">Pending Client Action Items</h3>
-            <div className="p-3 bg-amber-950/30 border border-amber-900/40 rounded-lg text-amber-400 flex items-start gap-2">
-              <AlertTriangle size={16} className="shrink-0 mt-0.5" />
-              <div>
-                <span className="font-bold uppercase block text-[10px] tracking-wider">Pending Signature</span>
-                <p className="text-[10px] leading-relaxed mt-0.5">Siting survey validation requires executive representative sign-off by June 20, 2026.</p>
-              </div>
+          {/* Unique Page Picture/Illustration */}
+          <div className="glass-panel rounded-2xl p-6 space-y-4 border border-slate-800 shadow-xl text-center">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider">Milestone Verification</h3>
+            <div className="p-4 bg-slate-950 rounded-xl border border-slate-900 flex justify-center">
+              <svg className="w-full h-24 text-emerald-400/80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+                <circle cx="50" cy="50" r="30" stroke="emerald" />
+                <path d="M38 50 L47 59 L65 41" stroke="emerald" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="50" cy="50" r="40" stroke="slate" strokeDasharray="2,2" />
+              </svg>
             </div>
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Approved Verification Code</p>
           </div>
         </div>
       </div>
