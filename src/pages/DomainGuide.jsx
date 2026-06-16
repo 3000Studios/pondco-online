@@ -82,12 +82,12 @@ export default function DomainGuide() {
 
               <div className="bg-slate-950/60 border border-slate-900 rounded-xl p-5 space-y-3">
                 <div className="text-xs font-bold uppercase tracking-wider text-cyan-400">2. Host & Deploy</div>
-                <h3 className="text-md font-bold text-white">Vercel or Netlify</h3>
+                <h3 className="text-md font-bold text-white">Cloudflare Pages</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Generous free lifetime tiers with 100GB of bandwidth. Connects directly to GitHub to publish changes instantly with free custom SSL on <code className="text-cyan-400">pondco.online</code>.
+                  Generous free lifetime tier. Connects directly to GitHub to publish changes instantly with free custom SSL and auto-deployments on <code className="text-cyan-400">pondco.online</code>.
                 </p>
               </div>
-
+              
               <div className="bg-slate-950/60 border border-slate-900 rounded-xl p-5 space-y-3">
                 <div className="text-xs font-bold uppercase tracking-wider text-cyan-400">3. Market & Analyze</div>
                 <h3 className="text-md font-bold text-white">Integration Add-ons</h3>
@@ -168,7 +168,7 @@ export default function DomainGuide() {
           Summary Recommendation
         </h2>
         <p className="text-sm text-slate-400 leading-relaxed">
-          To get the absolute most power for free with <strong className="text-slate-300">pondco.online</strong>, pair <strong className="text-slate-300">GitHub</strong> (for coding) with <strong className="text-slate-300">Vercel/Netlify</strong> (for hosting/deploying), and drop in a free marketing tool like <strong className="text-slate-300">Mailchimp</strong> or <strong className="text-slate-300">Brevo</strong> (formerly Sendinblue) which give you up to thousands of free marketing emails per month.
+          To get the absolute most power for free with <strong className="text-slate-300">pondco.online</strong>, pair <strong className="text-slate-300">GitHub</strong> (for coding) with <strong className="text-slate-300">Cloudflare Pages</strong> (for hosting/deploying), and drop in a free marketing tool like <strong className="text-slate-300">Mailchimp</strong> or <strong className="text-slate-300">Brevo</strong> (formerly Sendinblue) which give you up to thousands of free marketing emails per month.
         </p>
       </section>
     </div>
