@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
-import { ShieldCheck, Layers, FileText, CheckCircle2, XCircle, AlertTriangle, Users, BookOpen, Send, Plane, Compass, Award, HardHat, PhoneCall } from 'lucide-react'
+import { ShieldCheck, Layers, FileText, CheckCircle2, XCircle, AlertTriangle, Users, BookOpen, Send, Plane, Calendar, Clock, HardHat, PhoneCall } from 'lucide-react'
 
 export default function EnterpriseHub() {
-  // Simulating User Role matching localstorage
   const role = localStorage.getItem('pondco_user_role') || 'executive'
-
   const [activePortalTab, setActivePortalTab] = useState('pipeline') // pipeline | safety | rag | agent | comms
+
+  // Private Sprints & Deployments Calendar Data
+  const sprintSchedules = [
+    { name: 'Sprint 12: Ground Siting Clearance', status: 'Completed', date: 'June 02, 2026', owner: 'KSA Civil Team' },
+    { name: 'Sprint 13: Cab Height Line-of-Sight', status: 'In Progress', date: 'June 18, 2026', owner: 'Aviation PM' },
+    { name: 'Sprint 14: FAA Commissioning Review', status: 'Scheduled', date: 'July 10, 2026', owner: 'Grady Smith, Jr.' },
+    { name: 'Deploy: Production ATCT Blueprint Pack', status: 'Scheduled', date: 'Aug 15, 2026', owner: 'Lead Architect' }
+  ]
   
   // Pipeline State
   const [opportunities, setOpportunities] = useState([
@@ -20,7 +26,7 @@ export default function EnterpriseHub() {
       completionChance: 90,
       strategicFit: true,
       technicalReview: true,
-      pricingReview: false, // will cause validation error if trying to move past Pricing Review
+      pricingReview: false,
       sectorSignOffs: { Aviation: true, Infrastructure: false }
     },
     {
@@ -45,7 +51,7 @@ export default function EnterpriseHub() {
   const [employees, setEmployees] = useState([
     { name: 'Grady Smith, Jr.', role: 'Senior VP Infrastructure', signedSafety: true },
     { name: 'KSA Partner Lead', role: 'Civil Engineering Manager', signedSafety: true },
-    { name: 'Aviation Project Director', role: 'Primary PM', signedSafety: false } // Unsigned safety meeting locks workbook submissions!
+    { name: 'Aviation Project Director', role: 'Primary PM', signedSafety: false }
   ])
   const [safetyLogDate, setSafetyLogDate] = useState('2026-06-15 08:00 AM')
   const [delinquentLock, setDelinquentLock] = useState(true)
@@ -81,7 +87,6 @@ export default function EnterpriseHub() {
     setPipelineError(null)
     const opp = opportunities.find(o => o.id === oppId)
     
-    // Check validation gates
     if (opp.phase === 'Pursuit Go / No-Go' && !opp.strategicFit) {
       setPipelineError(`[GATE LOCKED] Cannot advance Opportunity ${oppId} to Capture Planning: Strategic Fit score and sector manager review are required.`)
       return
@@ -115,7 +120,6 @@ export default function EnterpriseHub() {
     e.preventDefault()
     if (!ragQuery.trim()) return
 
-    // Simulate RAG embeddings search
     if (ragQuery.toLowerCase().includes('siting') || ragQuery.toLowerCase().includes('f70') || ragQuery.toLowerCase().includes('trm')) {
       setRagResult({
         answer: 'Based on the FAA Federal Contract Tower Siting Analysis reports, the visual clearance line of sight (LOS) for French Valley Airport (F70) requires a cab floor height of 65 ft AGL. For Jacqueline Cochran Regional Airport (TRM), the optimal height is 82 ft AGL to clear the main hangar roofs.',
@@ -149,7 +153,6 @@ export default function EnterpriseHub() {
       [selectedAgent]: [...prev[selectedAgent], userMsg]
     }))
 
-    // Simulate agent response based on RAG
     setTimeout(() => {
       let replyText = `I have received your request regarding "${agentInput}". Checking our RAG database for active project details...`
       if (agentInput.toLowerCase().includes('status')) {
@@ -230,9 +233,35 @@ export default function EnterpriseHub() {
         </div>
       </div>
 
+      {/* SPRINT & DEPLOYMENT BOARD WIDGET */}
+      <section className="glass-panel rounded-3xl p-6 border border-slate-800 shadow-2xl space-y-4">
+        <h3 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+          <Calendar size={18} className="text-cyan-400" /> In-House Sprint &amp; Deployment Cadence
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {sprintSchedules.map((sprint, idx) => (
+            <div key={idx} className="bg-slate-950/60 border border-slate-900 p-4 rounded-xl space-y-2 hover:border-cyan-500/30 transition-all cursor-pointer">
+              <div className="flex justify-between items-center text-[9px] uppercase tracking-wider font-bold">
+                <span className="text-slate-500">{sprint.owner}</span>
+                <span className={`px-2 py-0.5 rounded ${
+                  sprint.status === 'Completed' ? 'bg-emerald-950 text-emerald-400' :
+                  sprint.status === 'In Progress' ? 'bg-amber-950 text-amber-400 animate-pulse' :
+                  'bg-slate-900 text-slate-400'
+                }`}>{sprint.status}</span>
+              </div>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wide">{sprint.name}</h4>
+              <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+                <Clock size={12} />
+                <span>{sprint.date}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Main Tab Area */}
       <div className="min-h-[450px]">
-        
         {/* TAB 1: WIN/LOSS PIPELINE */}
         {activePortalTab === 'pipeline' && (
           <div className="space-y-6">
@@ -296,7 +325,6 @@ export default function EnterpriseHub() {
               <ShieldCheck size={20} className="text-orange-400" /> Mandatory Safety &amp; Workbooks
             </h2>
 
-            {/* Delinquent banner check */}
             {delinquentLock ? (
               <div className="p-4 bg-red-950/40 border border-red-900/60 rounded-xl text-red-400 text-xs space-y-3">
                 <div className="flex items-center gap-3 font-bold uppercase tracking-wider">
@@ -321,7 +349,6 @@ export default function EnterpriseHub() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-              {/* Employee registry roster */}
               <div className="glass-panel rounded-2xl p-6 space-y-4">
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-900 pb-3">Project Roster &amp; Signature Status</h3>
                 <div className="space-y-3">
@@ -341,7 +368,6 @@ export default function EnterpriseHub() {
                 </div>
               </div>
 
-              {/* Configuration Workbook Input mockup */}
               <div className={`glass-panel rounded-2xl p-6 space-y-4 relative ${delinquentLock ? 'opacity-40 pointer-events-none' : ''}`}>
                 {delinquentLock && (
                   <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm z-20 flex items-center justify-center rounded-2xl">
@@ -390,7 +416,7 @@ export default function EnterpriseHub() {
                 type="text"
                 value={ragQuery}
                 onChange={(e) => setRagQuery(e.target.value)}
-                placeholder="Query blueprints, sighting assessments, KSA contract details..."
+                placeholder="Query blueprints, siting assessments, KSA contract details..."
                 className="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm text-cyan-400 placeholder-slate-700 focus:outline-none"
               />
               <button 
@@ -445,7 +471,6 @@ export default function EnterpriseHub() {
               </div>
             </div>
 
-            {/* Chat message display */}
             <div className="glass-panel rounded-2xl p-6 h-80 overflow-y-auto space-y-4 flex flex-col justify-end">
               {agentChats[selectedAgent].map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -458,7 +483,6 @@ export default function EnterpriseHub() {
               ))}
             </div>
 
-            {/* Chat Input */}
             <form onSubmit={handleSendAgentMessage} className="flex gap-3">
               <input
                 type="text"
@@ -480,7 +504,6 @@ export default function EnterpriseHub() {
         {/* TAB 5: INTERNAL COMMUNICATIONS & CHAT */}
         {activePortalTab === 'comms' && (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Chat panel (Col 1-8) */}
             <div className="md:col-span-8 glass-panel rounded-2xl p-6 space-y-4">
               <div className="flex justify-between items-center border-b border-slate-900 pb-3">
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">Aviation Sector Channels</h3>
@@ -515,7 +538,6 @@ export default function EnterpriseHub() {
               </form>
             </div>
 
-            {/* Video calling console (Col 9-12) */}
             <div className="md:col-span-4 glass-panel rounded-2xl p-6 space-y-4 text-center">
               <h3 className="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-900 pb-3">Video Conference</h3>
               

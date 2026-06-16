@@ -9,127 +9,147 @@ import FAQ from './pages/FAQ'
 import Insights from './pages/Insights'
 import ClientProgress from './pages/ClientProgress'
 import EnterpriseHub from './pages/EnterpriseHub'
-import DomainGuide from './pages/DomainGuide'
 import BackgroundWallpaper from './components/UI/BackgroundWallpaper'
-import { Plane, Building2, Home, Sparkles, Briefcase, FileText, Globe, Layers, HelpCircle, FileCheck } from 'lucide-react'
+import { Plane, Home, Sparkles, Briefcase, FileText, Globe, Layers, FileCheck } from 'lucide-react'
 
 function Navbar() {
   const location = useLocation()
   
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+    <nav className="fixed top-4 left-4 right-4 z-50 rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-slate-800 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] px-6 py-4 flex items-center justify-between transition-transform duration-300">
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 rounded bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20 font-header">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center font-black text-slate-950 shadow-[0_4px_12px_rgba(0,242,254,0.3)] font-header border-b-2 border-cyan-300">
           P
         </div>
-        <span className="font-semibold text-lg tracking-wider text-white font-header uppercase">
-          POND<span className="text-cyan-400 font-light">CO</span> <span className="text-[9px] uppercase tracking-[0.2em] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-900/50">Online</span>
+        <span className="font-black text-xl tracking-wider text-white font-header uppercase flex items-center gap-1">
+          POND<span className="text-cyan-400 font-light">CO</span> 
+          <span className="text-[8px] uppercase tracking-[0.2em] bg-cyan-950/80 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800/30">ONLINE</span>
         </span>
       </div>
       
-      <div className="flex space-x-1 font-header text-xs font-bold uppercase tracking-wider">
+      <div className="hidden md:flex space-x-1 font-header text-xs font-bold uppercase tracking-wider">
         <Link 
           to="/" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/' 
-              ? 'bg-slate-800 text-white shadow-inner border border-slate-700/50' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <Home size={14} />
-          <span>Home</span>
+          <span className="hover:text-glow">Home</span>
         </Link>
         <Link 
           to="/projects" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/projects' 
-              ? 'bg-cyan-950 text-cyan-400 border border-cyan-500/30' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <Plane size={14} />
-          <span>Aviation</span>
+          <span className="hover:text-glow">Aviation</span>
         </Link>
         <Link 
           to="/services" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/services' 
-              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <Briefcase size={14} />
-          <span>Services</span>
+          <span className="hover:text-glow">Services</span>
         </Link>
         <Link 
           to="/markets" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/markets' 
-              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <Globe size={14} />
-          <span>Markets</span>
+          <span className="hover:text-glow">Markets</span>
         </Link>
         <Link 
           to="/portfolio" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/portfolio' 
-              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <Layers size={14} />
-          <span>Portfolio</span>
+          <span className="hover:text-glow">Portfolio</span>
         </Link>
         <Link 
           to="/client" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/client' 
-              ? 'bg-slate-850 text-slate-200 border border-slate-800' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/35 shadow-[0_2px_8px_rgba(0,242,254,0.15)]' 
+              : 'text-slate-400 hover:text-cyan-300 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <FileText size={14} />
-          <span>Client</span>
+          <span className="hover:text-glow">Client</span>
         </Link>
         <Link 
           to="/hub" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
+          className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 border ${
             location.pathname === '/hub' 
-              ? 'bg-orange-950 text-orange-400 border border-orange-500/30' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+              ? 'bg-orange-950/80 text-orange-400 border-orange-500/35 shadow-[0_2px_8px_rgba(249,115,22,0.15)]' 
+              : 'text-slate-400 hover:text-orange-400 hover:border-slate-800/80 hover:bg-slate-900/40 border-transparent'
           }`}
         >
           <FileCheck size={14} />
-          <span>SaaS Hub</span>
-        </Link>
-        <Link 
-          to="/guide" 
-          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 ${
-            location.pathname === '/guide' 
-              ? 'bg-purple-950 text-purple-400 border border-purple-500/30' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
-          }`}
-        >
-          <Sparkles size={14} />
-          <span>Guide</span>
+          <span className="hover:text-glow">SaaS Hub</span>
         </Link>
       </div>
     </nav>
   )
 }
 
+function ScrollingTicker() {
+  return (
+    <div className="w-full bg-slate-950 border-y border-slate-900 py-3 relative z-30 font-header overflow-hidden shadow-[inset_0_4px_12px_rgba(0,0,0,0.8)]">
+      <div className="flex items-center">
+        <div className="bg-cyan-950 text-cyan-400 px-3 py-1 rounded-lg border border-cyan-800/50 text-[10px] font-black uppercase tracking-wider ml-4 z-10 shadow-[0_2px_6px_rgba(0,242,254,0.2)]">
+          GLOBAL NETWORK TICKER
+        </div>
+        <div className="ticker-wrap flex items-center w-full">
+          <div className="ticker-content text-slate-400 text-xs tracking-widest uppercase flex space-x-24 pl-8 animate-ticker">
+            <span>✈️ FLIGHT DELAYS: LAX +12M (WEATHER) | JFK ON-TIME | ORD +25M (AIR TRAFFIC) | SFO ON-TIME | ATL +10M</span>
+            <span>⚡ SYSTEM: FAA TOWER INFRASTRUCTURE PLATFORM DEPLOYED SUCCESSFULLY TO CLOUDFLARE PAGES.</span>
+            <span>🏗️ CONTRACT WINS: RIVERSIDE COUNTY AWARDS SECTOR UPGRADES FOR F70 & TRM SCHEMATICS.</span>
+            <span>📍 COACHELLA VALLEY: WIND ADVISORY ACTIVE - ALTIMETER CHECKS ONGOING FOR ALL APPROACH PATTERNS.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function Footer() {
   return (
-    <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 mt-20 text-center text-xs text-slate-500 font-header uppercase tracking-wider">
-      <div className="flex justify-center space-x-6 mb-4 text-[10px] text-slate-400">
-        <Link to="/faq" className="hover:text-cyan-400">FAQ</Link>
-        <span>•</span>
-        <Link to="/insights" className="hover:text-cyan-400">Insights</Link>
+    <footer className="w-full bg-slate-900/80 backdrop-blur-xl border-t border-slate-800 py-8 mt-20 relative z-10 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] rounded-t-3xl">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="text-center md:text-left">
+          <span className="font-black text-lg text-white font-header uppercase tracking-wider">
+            POND<span className="text-cyan-400">CO</span>
+          </span>
+          <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">A/E DESIGN & COMMAND CONSOLE</p>
+        </div>
+        
+        <div className="flex space-x-8 text-xs text-slate-400 font-header uppercase tracking-wider font-bold">
+          <Link to="/faq" className="hover:text-cyan-400 transition-colors">FAQ</Link>
+          <Link to="/insights" className="hover:text-cyan-400 transition-colors">Insights</Link>
+        </div>
+        
+        <div className="text-center md:text-right text-[10px] text-slate-500 font-header uppercase tracking-wider">
+          <p>Copyright © 2026 Pond & Company. Confidential Federal & Municipal specifications.</p>
+        </div>
       </div>
-      <p>Copyright © 2026 Pond & Company / 3000Studios. Confidential Project Engineering Spec Docs.</p>
     </footer>
   )
 }
@@ -137,9 +157,10 @@ function Footer() {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-slate-950/20 text-slate-100 flex flex-col pt-20 relative">
+      <div className="min-h-screen bg-transparent text-slate-100 flex flex-col pt-32 relative overflow-x-hidden">
         <BackgroundWallpaper />
         <Navbar />
+        
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           <Routes>
             <Route path="/" element={<Index />} />
@@ -151,9 +172,10 @@ export default function App() {
             <Route path="/insights" element={<Insights />} />
             <Route path="/client" element={<ClientProgress />} />
             <Route path="/hub" element={<EnterpriseHub />} />
-            <Route path="/guide" element={<DomainGuide />} />
           </Routes>
         </main>
+        
+        <ScrollingTicker />
         <Footer />
       </div>
     </Router>

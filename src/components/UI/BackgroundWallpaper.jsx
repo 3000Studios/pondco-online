@@ -1,91 +1,177 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 export default function BackgroundWallpaper() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let animationFrameId
+    let width = (canvas.width = window.innerWidth)
+    let height = (canvas.height = window.innerHeight)
+
+    const mouse = { x: width / 2, y: height / 2, active: false }
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = window.innerWidth
+      height = canvas.height = window.innerHeight
+    }
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX
+      mouse.y = e.clientY
+      mouse.active = true
+    }
+
+    const handleMouseLeave = () => {
+      mouse.active = false
+    }
+
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseleave', handleMouseLeave)
+
+    // Generate static blueprint lines/nodes
+    const nodes = []
+    const nodeCount = 60
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 2 + 1,
+      })
+    }
+
+    let angle = 0
+    const draw = () => {
+      ctx.fillStyle = '#02050f'
+      ctx.fillRect(0, 0, width, height)
+
+      // 1. Draw Blueprint Grid
+      ctx.strokeStyle = 'rgba(0, 242, 254, 0.035)'
+      ctx.lineWidth = 1
+      const gridSpacing = 40
+      
+      // Draw grid lines
+      for (let x = 0; x < width; x += gridSpacing) {
+        ctx.beginPath()
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, height)
+        ctx.stroke()
+      }
+      for (let y = 0; y < height; y += gridSpacing) {
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(width, y)
+        ctx.stroke()
+      }
+
+      // 2. Draw 3D blueprint perspective grid lines reactive to mouse
+      if (mouse.active) {
+        ctx.strokeStyle = 'rgba(0, 242, 254, 0.05)'
+        ctx.lineWidth = 0.5
+        // Render isometric perspective lines from cursor to borders
+        const steps = 12
+        for (let i = 0; i < steps; i++) {
+          const theta = (i / steps) * Math.PI * 2
+          const dx = Math.cos(theta) * 300
+          const dy = Math.sin(theta) * 300
+          ctx.beginPath()
+          ctx.moveTo(mouse.x, mouse.y)
+          ctx.lineTo(mouse.x + dx, mouse.y + dy)
+          ctx.stroke()
+        }
+
+        // Draw cursor reticle
+        ctx.strokeStyle = 'rgba(0, 242, 254, 0.25)'
+        ctx.beginPath()
+        ctx.arc(mouse.x, mouse.y, 25, 0, Math.PI * 2)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(mouse.x - 35, mouse.y)
+        ctx.lineTo(mouse.x + 35, mouse.y)
+        ctx.moveTo(mouse.x, mouse.y - 35)
+        ctx.lineTo(mouse.x, mouse.y + 35)
+        ctx.stroke()
+      }
+
+      // 3. Draw architectural tower/plane outlines in background
+      angle += 0.001
+      ctx.save()
+      ctx.translate(width - 150, height - 150)
+      ctx.rotate(angle)
+      ctx.strokeStyle = 'rgba(0, 242, 254, 0.08)'
+      ctx.lineWidth = 1
+      
+      // Draw concentric radar/blueprint rings
+      for (let r = 30; r <= 120; r += 30) {
+        ctx.beginPath()
+        ctx.arc(0, 0, r, 0, Math.PI * 2)
+        ctx.stroke()
+      }
+      // Crosshairs
+      ctx.beginPath()
+      ctx.moveTo(-130, 0)
+      ctx.lineTo(130, 0)
+      ctx.moveTo(0, -130)
+      ctx.lineTo(0, 130)
+      ctx.stroke()
+      ctx.restore()
+
+      // 4. Update and draw nodes
+      nodes.forEach((node) => {
+        node.x += node.vx
+        node.y += node.vy
+
+        // Wrap around boundaries
+        if (node.x < 0) node.x = width
+        if (node.x > width) node.x = 0
+        if (node.y < 0) node.y = height
+        if (node.y > height) node.y = 0
+
+        ctx.fillStyle = 'rgba(0, 242, 254, 0.15)'
+        ctx.beginPath()
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2)
+        ctx.fill()
+
+        // Line to mouse if close
+        if (mouse.active) {
+          const dx = node.x - mouse.x
+          const dy = node.y - mouse.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < 180) {
+            ctx.strokeStyle = `rgba(0, 242, 254, ${0.15 * (1 - dist / 180)})`
+            ctx.lineWidth = 0.5
+            ctx.beginPath()
+            ctx.moveTo(node.x, node.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.stroke()
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(draw)
+    }
+
+    draw()
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
+
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden bg-[#02040a] pointer-events-none">
-      {/* Night Sky Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-[#091026] to-[#02040a]" />
-
-      {/* Twinkling Stars */}
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute top-[10%] left-[20%] w-0.5 h-0.5 bg-white rounded-full animate-ping" />
-        <div className="absolute top-[25%] left-[75%] w-1 h-1 bg-white rounded-full opacity-60" style={{ animationDuration: '3s', animationIterationCount: 'infinite' }} />
-        <div className="absolute top-[40%] left-[45%] w-0.5 h-0.5 bg-cyan-400 rounded-full animate-pulse" />
-        <div className="absolute top-[15%] left-[85%] w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-[70%] left-[15%] w-1 h-1 bg-blue-400 rounded-full opacity-40" />
-      </div>
-
-      {/* Moving Clouds on Loop */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        {/* Cloud Layer 1 */}
-        <div 
-          className="absolute top-[15%] w-[200%] h-40 bg-repeat-x"
-          style={{
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200" viewBox="0 0 1000 200"><path d="M100 120 Q150 90 200 110 Q250 80 320 110 Q380 90 420 120 L500 120 Q550 90 600 110 Q650 80 720 110 Q780 90 820 120 Z" fill="white" opacity="0.15"/></svg>')`,
-            animation: 'move-clouds 80s linear infinite'
-          }}
-        />
-        {/* Cloud Layer 2 */}
-        <div 
-          className="absolute top-[5%] w-[200%] h-32 bg-repeat-x"
-          style={{
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200" viewBox="0 0 1000 200"><path d="M50 150 Q100 120 150 140 Q200 110 270 140 Q330 120 370 150 L450 150 Q500 120 550 140 Q600 110 670 140 Q730 120 770 150 Z" fill="cyan" opacity="0.08"/></svg>')`,
-            animation: 'move-clouds 120s linear infinite',
-            animationDelay: '-20s'
-          }}
-        />
-      </div>
-
-      {/* Siting Landscape (Mountain Silhouette & Runway) */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none">
-        {/* Horizon Mountains */}
-        <svg className="absolute bottom-0 w-full h-full text-[#080d1a] opacity-60" preserveAspectRatio="none" viewBox="0 0 1440 200">
-          <path fill="currentColor" d="M0 200 L0 160 L120 130 L250 170 L480 110 L680 150 L890 90 L1150 160 L1300 120 L1440 160 L1440 200 Z" />
-        </svg>
-
-        {/* Foreground Ridge */}
-        <svg className="absolute bottom-0 w-full h-1/2 text-[#03060f]" preserveAspectRatio="none" viewBox="0 0 1440 100">
-          <path fill="currentColor" d="M0 100 L0 60 L320 80 L720 40 L1100 70 L1440 50 L1440 100 Z" />
-        </svg>
-
-        {/* Airport Runway & Taxiway Lights */}
-        <div className="absolute bottom-6 left-1/4 right-1/4 h-2 bg-[#050914] rounded shadow-inner transform perspective-1000 rotateX-30 flex justify-between px-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 opacity-60" />
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 opacity-60" />
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        </div>
-
-        {/* Animated Planes (Taking Off) */}
-        <div className="absolute bottom-12 left-0 right-0 h-24 overflow-hidden pointer-events-none">
-          <div className="absolute flex items-center space-x-1 animate-plane-takeoff" style={{ left: '-10%', bottom: '20px' }}>
-            {/* Tiny Plane Icon / Light */}
-            <span className="w-2 h-2 rounded-full bg-white shadow-lg animate-ping" />
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-            <svg className="w-4 h-4 text-cyan-400 transform -rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Airport Control Tower Silhouette */}
-        <div className="absolute bottom-0 right-[15%] w-16 h-48 flex flex-col items-center justify-end pointer-events-none z-10">
-          {/* Beacon Light */}
-          <span className="w-3 h-3 rounded-full bg-red-600 beacon-active mb-[-2px] z-20" />
-          {/* Cab (F70/TRM Style Glass Top) */}
-          <div className="w-12 h-8 bg-gradient-to-b from-cyan-950/90 to-slate-900 border border-cyan-800/40 rounded-t-lg relative flex items-center justify-center shadow-lg shadow-cyan-500/10">
-            <span className="w-1.5 h-4 bg-cyan-500/20 absolute left-2 rounded" />
-            <span className="w-1.5 h-4 bg-cyan-500/20 absolute right-2 rounded" />
-          </div>
-          {/* Tower Shaft */}
-          <div className="w-6 h-36 bg-gradient-to-b from-slate-900 to-[#02040a] border-x border-slate-800/60 relative">
-            {/* Decorative Shaft Lights */}
-            <div className="absolute top-[20%] left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500 animate-pulse" />
-            <div className="absolute top-[50%] left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="absolute top-[80%] left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500 animate-pulse" style={{ animationDelay: '1s' }} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <canvas 
+      ref={canvasRef} 
+      className="fixed inset-0 -z-50 w-full h-full block pointer-events-none" 
+    />
   )
 }
