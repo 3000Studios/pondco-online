@@ -10,7 +10,9 @@ export default function Index() {
   const [activeLoginTab, setActiveLoginTab] = useState('client') // client | internal
   const [loginRole, setLoginRole] = useState('executive')
   const [accessCode, setAccessCode] = useState('')
+  const [email, setEmail] = useState('')
   const [loginError, setLoginError] = useState('')
+  const [showGoogleModal, setShowGoogleModal] = useState(false)
   const [hoveredCard, setHoveredCard] = useState(null)
   
   // Weather state (serving local visitor dynamically)
@@ -62,14 +64,22 @@ export default function Index() {
     if (activeLoginTab === 'client') {
       navigate('/client')
     } else {
-      localStorage.setItem('pondco_user_role', loginRole)
+      let resolvedRole = loginRole
+      if (email.toLowerCase() === 'mr.jwswain@gmail.com') {
+        resolvedRole = 'owner'
+      } else if (email.toLowerCase() === 'kyle.freedman@pondco.com') {
+        resolvedRole = 'admin'
+      }
+      localStorage.setItem('pondco_user_role', resolvedRole)
+      localStorage.setItem('pondco_user_email', email)
       navigate('/hub')
     }
   }
 
-  const handleGoogleLogin = () => {
-    // Simulate Google account authentication and redirect to internal CRM/Hub dashboard
-    localStorage.setItem('pondco_user_role', 'executive')
+  const selectGoogleAccount = (selectedEmail, selectedRole) => {
+    localStorage.setItem('pondco_user_role', selectedRole)
+    localStorage.setItem('pondco_user_email', selectedEmail)
+    setShowGoogleModal(false)
     navigate('/hub')
   }
 
@@ -189,6 +199,8 @@ export default function Index() {
                       <input
                         type="email"
                         placeholder="employee@pondco.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white"
                       />
@@ -224,7 +236,8 @@ export default function Index() {
               </div>
 
               <button
-                onClick={handleGoogleLogin}
+                type="button"
+                onClick={() => setShowGoogleModal(true)}
                 className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg border border-slate-700 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_2px_6px_rgba(0,0,0,0.4)]"
               >
                 <User size={14} className="text-red-400" />
@@ -348,6 +361,60 @@ export default function Index() {
         </div>
       </section>
 
+      {showGoogleModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+          <div className="glass-panel rounded-3xl p-8 max-w-sm w-full border border-slate-800 space-y-6 text-center shadow-2xl relative">
+            <h3 className="text-lg font-black text-white uppercase tracking-wider">Choose Google Account</h3>
+            <p className="text-xs text-slate-400 font-serif">Select an identity to authenticate into Pondco.online:</p>
+            
+            <div className="space-y-3">
+              <button 
+                type="button"
+                onClick={() => selectGoogleAccount('Mr.jwswain@gmail.com', 'owner')}
+                className="w-full p-3 bg-slate-900 hover:bg-slate-850 rounded-xl border border-slate-800 text-xs font-header text-left flex justify-between items-center transition-all hover:border-cyan-500/40"
+              >
+                <div>
+                  <span className="font-bold text-white block">Mr. jwswain</span>
+                  <span className="text-[10px] text-slate-500 font-mono">Mr.jwswain@gmail.com</span>
+                </div>
+                <span className="text-[9px] uppercase tracking-wider font-bold bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-900/50">Owner</span>
+              </button>
+              
+              <button 
+                type="button"
+                onClick={() => selectGoogleAccount('kyle.freedman@pondco.com', 'admin')}
+                className="w-full p-3 bg-slate-900 hover:bg-slate-850 rounded-xl border border-slate-800 text-xs font-header text-left flex justify-between items-center transition-all hover:border-cyan-500/40"
+              >
+                <div>
+                  <span className="font-bold text-white block">Kyle Freedman</span>
+                  <span className="text-[10px] text-slate-500 font-mono">kyle.freedman@pondco.com</span>
+                </div>
+                <span className="text-[9px] uppercase tracking-wider font-bold bg-orange-950 text-orange-400 px-2 py-0.5 rounded border border-orange-900/50">Admin</span>
+              </button>
+
+              <button 
+                type="button"
+                onClick={() => selectGoogleAccount('guest@pondco.com', 'executive')}
+                className="w-full p-3 bg-slate-900 hover:bg-slate-850 rounded-xl border border-slate-800 text-xs font-header text-left flex justify-between items-center transition-all hover:border-slate-800"
+              >
+                <div>
+                  <span className="font-bold text-white block">Simulated Guest</span>
+                  <span className="text-[10px] text-slate-500 font-mono">guest@pondco.com</span>
+                </div>
+                <span className="text-[9px] uppercase tracking-wider font-bold bg-slate-950 text-slate-400 px-2 py-0.5 rounded border border-slate-900">Executive</span>
+              </button>
+            </div>
+
+            <button 
+              type="button"
+              onClick={() => setShowGoogleModal(false)}
+              className="text-xs text-slate-500 hover:text-slate-300 font-bold uppercase tracking-wider pt-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
