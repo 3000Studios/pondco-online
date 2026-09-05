@@ -190,3 +190,36 @@
 .animate-slide-header {
   animation: slide-in-header 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .ticker-wrap {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ticker-content {
+    animation: none !important;
+  }
+}
