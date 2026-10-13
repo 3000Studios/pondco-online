@@ -1,21 +1,37 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowRight, Hammer, Leaf, Wrench, Droplets, ShieldCheck, BookOpen } from 'lucide-react'
-import { guides, gearCategories } from './guides.js'
+import { guides, gearCategories, gearPicks, associatesUrl, guideGear } from './guides.js'
 
 const SITE = 'PondCo'
+const ORIGIN = 'https://pondco.online'
+const OG_IMAGE = `${ORIGIN}/og-image.png`
 
-function Seo({ title, description }) {
+function Seo({ title, description, path, type = 'website' }) {
   useEffect(() => {
     document.title = title
-    const setMeta = (name, content) => {
-      let element = document.querySelector(`meta[name="${name}"]`)
-      if (!element) { element = document.createElement('meta'); element.name = name; document.head.append(element) }
+    const url = `${ORIGIN}${path || window.location.pathname}`
+    const setMeta = (attr, key, content) => {
+      let element = document.querySelector(`meta[${attr}="${key}"]`)
+      if (!element) { element = document.createElement('meta'); element.setAttribute(attr, key); document.head.append(element) }
       element.content = content
     }
-    setMeta('description', description)
-    setMeta('robots', 'index, follow')
-  }, [title, description])
+    setMeta('name', 'description', description)
+    setMeta('name', 'robots', 'index, follow')
+    setMeta('property', 'og:title', title)
+    setMeta('property', 'og:description', description)
+    setMeta('property', 'og:type', type)
+    setMeta('property', 'og:url', url)
+    setMeta('property', 'og:site_name', SITE)
+    setMeta('property', 'og:image', OG_IMAGE)
+    setMeta('name', 'twitter:card', 'summary_large_image')
+    setMeta('name', 'twitter:title', title)
+    setMeta('name', 'twitter:description', description)
+    setMeta('name', 'twitter:image', OG_IMAGE)
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.append(canonical) }
+    canonical.href = url
+  }, [title, description, path, type])
   return null
 }
 
@@ -67,7 +83,7 @@ function HomePage() {
   ]
   return (
     <>
-      <Seo title="PondCo — The Pond Owner's Hub | Backyard Pond Guides, Gear & Care" description="Straight answers for building, maintaining, and fixing backyard ponds and water gardens — sizing math, seasonal checklists, and honest gear criteria." />
+      <Seo title="PondCo — The Pond Owner's Hub | Backyard Pond Guides, Gear & Care" description="Straight answers for building, maintaining, and fixing backyard ponds and water gardens — sizing math, seasonal checklists, and honest gear criteria." path="/" />
       <section className="mx-auto max-w-6xl pt-10 sm:pt-16">
         <div className="grid items-center gap-8 md:grid-cols-2">
           <div>
@@ -103,7 +119,7 @@ function HomePage() {
             <Droplets className="mt-1 h-7 w-7 shrink-0 text-teal-800" aria-hidden="true" />
             <div>
               <h2 id="gear-heading" className="text-2xl font-bold text-emerald-950 sm:text-3xl">The Pond Gear Hub</h2>
-              <p className="mt-2 max-w-3xl leading-7 text-slate-600">Buying criteria for the five purchases that decide whether a pond works — what to look for, what to avoid, and why the numbers on the box mislead. Product links are being verified and rolled out; the criteria come first either way.</p>
+              <p className="mt-2 max-w-3xl leading-7 text-slate-600">Buying criteria for the six purchases that decide whether a pond works — what to look for, what to avoid, and why the numbers on the box mislead. Product picks are labelled as advertising where they appear; the criteria come first either way.</p>
             </div>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -128,7 +144,7 @@ function HomePage() {
       <section className="mx-auto max-w-6xl pb-16">
         <div className="flex items-start gap-3 rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm">
           <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-teal-700" aria-hidden="true" />
-          <p className="leading-7 text-slate-600"><strong className="text-emerald-950">How PondCo works:</strong> every guide here is written from established pond-keeping practice, states its rules of thumb as rules of thumb, and corrects errors when readers flag them. We do not publish fake reviews, invented ratings, or "best product" lists for products we have not verified. Where affiliate links appear in future, they will be marked — and they will never change the criteria we publish.</p>
+          <p className="leading-7 text-slate-600"><strong className="text-emerald-950">How PondCo works:</strong> every guide here is written from established pond-keeping practice, states its rules of thumb as rules of thumb, and corrects errors when readers flag them. We do not publish fake reviews, invented ratings, or "best product" lists for products we have not verified. Where affiliate links appear, they are marked as advertising — and they never change the criteria we publish.</p>
         </div>
       </section>
     </>
@@ -138,7 +154,7 @@ function HomePage() {
 function GuidesIndex() {
   return (
     <>
-      <Seo title="Pond Guides | PondCo" description="All PondCo guides: building a backyard pond, algae control, pump sizing math, koi basics, liners vs preformed shells, and winterizing checklists." />
+      <Seo title="Pond Guides | PondCo" description="All PondCo guides: building a backyard pond, algae control, pump sizing math, koi basics, liners vs preformed shells, and winterizing checklists." path="/guides" />
       <section className="mx-auto max-w-6xl py-12 sm:py-16">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Guides</p>
         <h1 className="mt-3 text-4xl font-bold text-emerald-950">Pond guides, written to be used</h1>
@@ -154,7 +170,7 @@ function GuidesIndex() {
 function GuidePage({ guide }) {
   return (
     <>
-      <Seo title={`${guide.title} | ${SITE}`} description={guide.description} />
+      <Seo title={`${guide.title} | ${SITE}`} description={guide.description} path={`/guides/${guide.slug}`} type="article" />
       <article className="mx-auto max-w-3xl py-12 sm:py-16">
         <header>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">{guide.eyebrow}</p>
@@ -178,6 +194,26 @@ function GuidePage({ guide }) {
           <h2 className="text-xl font-bold text-emerald-950">Keep going</h2>
           <p className="mt-2 leading-7 text-slate-600">Browse <Link className="font-semibold text-teal-800 underline" to="/guides">all PondCo guides</Link>, or check the <Link className="font-semibold text-teal-800 underline" to="/gear">Gear Hub</Link> before your next purchase.</p>
         </div>
+        {(guideGear[guide.slug] || []).length > 0 && (
+          <div className="mt-10 rounded-xl border border-teal-800/30 bg-[#F7F6F0] p-4">
+            <p className="text-sm leading-6 text-slate-600"><strong className="text-emerald-950">Gear in this guide — advertising:</strong> links below are Amazon Associates links, labelled (paid link). As an Amazon Associate I earn from qualifying purchases.</p>
+            {(guideGear[guide.slug] || []).map((catId) => {
+              const cat = gearCategories.find((c) => c.id === catId)
+              return (
+                <div key={catId} className="mt-4">
+                  <p className="text-sm font-semibold text-emerald-950">{cat ? cat.name : catId}</p>
+                  <ul className="mt-2 space-y-3">
+                    {(gearPicks[catId] || []).map((pick) => (
+                      <li key={pick.asin} className="text-sm leading-6 text-slate-600">
+                        <a className="font-semibold text-teal-800 underline" href={associatesUrl(pick.asin)} target="_blank" rel="nofollow sponsored noopener">{pick.name} (paid link)</a> — {pick.note}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </article>
     </>
   )
@@ -186,12 +222,12 @@ function GuidePage({ guide }) {
 function GearPage() {
   return (
     <>
-      <Seo title="Pond Gear Hub — Honest Buying Criteria | PondCo" description="Buying criteria for pond pumps, liners, filter systems, UV clarifiers and sterilizers, skimmers, and aeration kits: what to look for, what to avoid, and how the ratings mislead." />
+      <Seo title="Pond Gear Hub — Honest Buying Criteria | PondCo" description="Buying criteria for pond pumps, liners, filter systems, UV clarifiers and sterilizers, skimmers, and aeration kits: what to look for, what to avoid, and how the ratings mislead." path="/gear" />
       <section className="mx-auto max-w-4xl py-12 sm:py-16">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Gear Hub</p>
         <h1 className="mt-3 text-4xl font-bold text-emerald-950">Pond Gear Hub</h1>
         <p className="mt-4 text-lg leading-8 text-slate-600">Six categories decide whether a pond works: the pump, the liner, the filter system, the UV clarifier, the skimmer, and aeration. For each one, here is what actually matters, what to avoid, and how the marketing numbers mislead — the same criteria whether or not a product link ever appears beside them.</p>
-        <p className="mt-4 leading-7 text-slate-600">Product links, when they go live on this page, will be Amazon Associates links, labelled as advertising. PondCo's Associates tag is inserted when the links are published, so no product link ever appears here untracked or unlabelled.</p>
+        <p className="mt-4 leading-7 text-slate-600"><strong className="text-emerald-950">Advertising disclosure:</strong> the product picks on this page are Amazon Associates links, labelled (paid link). As an Amazon Associate I earn from qualifying purchases. The criteria above were written before any link was chosen and do not change for a product that pays a commission.</p>
         <div className="mt-10 space-y-8">
           {gearCategories.map((cat) => (
             <section key={cat.id} id={cat.id} className="scroll-mt-24 rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm sm:p-8">
@@ -205,9 +241,16 @@ function GearPage() {
               <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-slate-600">
                 {cat.avoid.map((item, i) => <li key={i}>{item}</li>)}
               </ul>
-              {/* affiliate-slot: AMAZON ASSOCIATES (primary) — Associates tag inserted at deploy; NO URL until then — category: {cat.id} */}
-              <div data-affiliate-slot="AMAZON-ASSOCIATES-PENDING-TAG" data-category={cat.id} className="mt-6 rounded-xl border border-dashed border-teal-800/40 bg-[#F7F6F0] p-4">
-                <p className="text-sm leading-6 text-slate-600"><strong className="text-emerald-950">Product picks:</strong> Amazon Associates links for this category go live with the site launch — the Associates tag is inserted then, so no link is ever published untracked. When they appear, they will be labelled as advertising, and they will never change the criteria above.</p>
+              {/* affiliate-slot: AMAZON ASSOCIATES — tag amazon300008-20; every link labelled (paid link) */}
+              <div data-affiliate-slot="AMAZON-ASSOCIATES" data-category={cat.id} className="mt-6 rounded-xl border border-teal-800/40 bg-[#F7F6F0] p-4">
+                <p className="text-sm leading-6 text-slate-600"><strong className="text-emerald-950">Product picks — advertising.</strong> As an Amazon Associate I earn from qualifying purchases. These picks follow the criteria above; the commission never changes them.</p>
+                <ul className="mt-3 space-y-3">
+                  {(gearPicks[cat.id] || []).map((pick) => (
+                    <li key={pick.asin} className="text-sm leading-6 text-slate-600">
+                      <a className="font-semibold text-teal-800 underline" href={associatesUrl(pick.asin)} target="_blank" rel="nofollow sponsored noopener">{pick.name} (paid link)</a> — {pick.note}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </section>
           ))}
@@ -217,10 +260,10 @@ function GearPage() {
   )
 }
 
-function LegalPage({ title, description, children }) {
+function LegalPage({ title, description, path, children }) {
   return (
     <>
-      <Seo title={`${title} | ${SITE}`} description={description || `${title} — PondCo, The Pond Owner's Hub.`} />
+      <Seo title={`${title} | ${SITE}`} description={description || `${title} — PondCo, The Pond Owner's Hub.`} path={path} />
       <article className="mx-auto max-w-3xl py-12 sm:py-16">
         <h1 className="text-4xl font-bold text-emerald-950">{title}</h1>
         <div className="mt-6 space-y-5 leading-7 text-slate-600">{children}</div>
@@ -231,7 +274,7 @@ function LegalPage({ title, description, children }) {
 
 function AboutPage() {
   return (
-    <LegalPage title="About PondCo" description="PondCo is an independent pond-owner resource: plain-language guides on building, maintaining, and fixing backyard ponds and water gardens.">
+    <LegalPage title="About PondCo" description="PondCo is an independent pond-owner resource: plain-language guides on building, maintaining, and fixing backyard ponds and water gardens." path="/about">
       <p>PondCo is an independent pond-owner resource. We publish plain-language, practical guides for people who build, keep, or are thinking about a backyard pond or water garden — the planning, the digging, the gear, the seasonal work, and the problems everyone eventually meets.</p>
       <p><strong>What we publish</strong></p>
       <p>Complete guides that show their working: the volume and pump-sizing math with real numbers, the temperature thresholds for feeding fish, the ranking of algae fixes by whether they address the cause. When a figure is a rule of thumb rather than a measured fact, we label it as one. When practice varies by climate, we say so.</p>
@@ -249,7 +292,7 @@ function AboutPage() {
 
 function ContactPage() {
   return (
-    <LegalPage title="Contact" description="Contact PondCo by email at info@pondco.online — corrections, topic suggestions, and questions about the guides.">
+    <LegalPage title="Contact" description="Contact PondCo by email at info@pondco.online — corrections, topic suggestions, and questions about the guides." path="/contact">
       <p>The way to reach PondCo is by email: <a className="font-semibold text-teal-800 underline" href="mailto:info@pondco.online">info@pondco.online</a>. We read everything and reply to substantive messages as promptly as we can.</p>
       <p><strong>Corrections</strong></p>
       <p>If a guide has something wrong — a threshold, a formula, an outdated practice — tell us which page and which passage, and what the correct information is. Corrections backed by a source (a manufacturer specification, an extension-service publication, your own measured results) are the fastest to verify and fix.</p>
@@ -265,7 +308,7 @@ function ContactPage() {
 
 function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" description="How PondCo handles information: what is collected, how Google AdSense advertising cookies work, and your choices.">
+    <LegalPage title="Privacy Policy" description="How PondCo handles information: what is collected, how Google AdSense advertising cookies work, and your choices." path="/privacy">
       <p>Last updated: October 2026</p>
       <p>PondCo is a reading resource. We do not require accounts and we do not ask for personal information to read the guides. This policy explains what information is collected when you use the site, how it is used, and the choices you have.</p>
       <p><strong>Information we collect</strong></p>
@@ -277,7 +320,7 @@ function PrivacyPage() {
       <p>• You can also control cookies through your browser settings; see our cookie notice for details.</p>
       <p>Advertising is served by these third parties under their own privacy policies. PondCo does not control the data practices of advertising networks beyond the site-level choices described here.</p>
       <p><strong>Affiliate links</strong></p>
-      <p>Some pages may in future contain affiliate links. If you click one, the merchant may set a cookie so a resulting purchase can be attributed. Those cookies are set by the merchant or its affiliate network, under their own policies; PondCo does not receive your personal information from them.</p>
+      <p>Some pages contain affiliate links, including Amazon Associates links. If you click one, Amazon or its affiliate network may set a cookie so a resulting purchase can be attributed. Those cookies are set by the merchant or its affiliate network, under their own policies; PondCo does not receive your personal information from them.</p>
       <p><strong>Data protection</strong></p>
       <p>We implement reasonable administrative and technical measures to protect information we handle, including encryption in transit and access controls on site infrastructure. No method of transmission over the Internet is completely secure, and we cannot guarantee absolute security.</p>
       <p><strong>Children's privacy</strong></p>
@@ -292,7 +335,7 @@ function PrivacyPage() {
 
 function TermsPage() {
   return (
-    <LegalPage title="Terms of Use" description="Terms of use for PondCo: educational purpose, accuracy, acceptable use, advertising and affiliate disclosure, and liability.">
+    <LegalPage title="Terms of Use" description="Terms of use for PondCo: educational purpose, accuracy, acceptable use, advertising and affiliate disclosure, and liability." path="/terms">
       <p>Last updated: October 2026</p>
       <p>By accessing PondCo, you agree to these terms. If you do not agree, please do not use the site.</p>
       <p><strong>Educational purpose; not professional advice</strong></p>
@@ -317,13 +360,13 @@ function TermsPage() {
 
 function CookiesPage() {
   return (
-    <LegalPage title="Cookie Notice" description="The cookies used on PondCo — strictly necessary, advertising (Google AdSense), and affiliate attribution — and how to control them.">
+    <LegalPage title="Cookie Notice" description="The cookies used on PondCo — strictly necessary, advertising (Google AdSense), and affiliate attribution — and how to control them." path="/cookies">
       <p>Last updated: October 2026</p>
       <p>Cookies are small text files stored on your device by your browser. They can remember preferences, keep a session working, measure usage, or — in the case of advertising cookies — help show ads relevant to your interests.</p>
       <p><strong>Cookies in use</strong></p>
       <p>Strictly necessary. Essential hosting and security services may use strictly necessary technical mechanisms to provide and protect the site. These are required for the site to function.</p>
       <p>Advertising cookies. We use third-party advertising services, including Google AdSense, which may place cookies to serve ads based on your prior visits to this site and other sites on the Internet. These cookies are set by the advertising providers, not by PondCo, and are governed by the providers' own policies.</p>
-      <p>Affiliate cookies. If you click an affiliate link (where present and marked), the merchant or its affiliate network may set a cookie to attribute a purchase. PondCo does not set these cookies.</p>
+      <p>Affiliate cookies. If you click an affiliate link (where present and marked), Amazon or the merchant's affiliate network may set a cookie to attribute a purchase. PondCo does not set these cookies.</p>
       <p><strong>Your choices</strong></p>
       <p>• Browser settings. All major browsers let you block or delete cookies, entirely or per site. Blocking advertising cookies will generally result in less relevant ads rather than no ads.</p>
       <p>• Google Ads Settings. You can opt out of Google's personalised advertising there.</p>
@@ -379,6 +422,7 @@ function Layout() {
             <div className="max-w-md">
               <p className="font-bold text-emerald-950">PondCo — The Pond Owner's Hub</p>
               <p className="mt-2 text-sm leading-6 text-slate-500">An independent, reader-supported resource for backyard pond and water-garden owners. PondCo is supported by advertising and, where marked, affiliate links that may earn a commission at no extra cost to you. Recommendations are never bought.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">As an Amazon Associate I earn from qualifying purchases.</p>
             </div>
             <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600" aria-label="Footer">
               <Link to="/guides">Guides</Link><Link to="/gear">Gear Hub</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/cookies">Cookies</Link>

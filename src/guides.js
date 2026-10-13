@@ -554,3 +554,49 @@ export const gearCategories = [
     ],
   },
 ]
+
+// Amazon Associates picks per Gear Hub category — tracking tag
+// amazon300008-20. Copy rule: NO prices, NO ratings, NO review counts.
+export const gearPicks = {
+  pumps: [
+    { name: 'TetraPond Debris-Handling Pump (DHP4200 size)', asin: 'B001QIPLAE', note: 'The solids-handling pick for fish ponds: passes debris up to ¼″ through a pre-filter cage to the filter, built for continuous duty, with published flow-at-height figures.' },
+    { name: 'Alpine Corporation Cyclone PAL3100 (3,100 GPH)', asin: 'B00489Q0VM', note: 'Large pre-filter, oil-free ceramic-shaft motor, runs submerged or inline — and a 33-ft cord, so no extension lead ever sits near the water.' },
+    { name: 'Danner Pondmaster Pond-Mag 700 GPH (02527)', asin: 'B000BJK3QQ', note: 'The efficient small-pond pump: magnetic drive, rigid pre-filter included, 5-year warranty — low watts for a pump that runs all year.' },
+  ],
+  liners: [
+    { name: 'Firestone PondGard 45-mil EPDM Liner, 15 × 20 ft', asin: 'B000G0GDJ6', note: 'The do-it-once liner: single-sheet 45-mil EPDM, labelled fish-safe, UV-stable, no plasticizers to embrittle. 20-year warranty.' },
+    { name: 'LifeGuard 45-mil EPDM Liner + Underlayment Combo, 15 × 20 ft', asin: 'B006SOIHOI', note: 'Liner and real geotextile underlayment in one box — the puncture insurance, included instead of forgotten.' },
+    { name: 'Firestone PondGard 45-mil EPDM Liner, 15 × 25 ft', asin: 'B002IUPTEC', note: 'The same 45-mil EPDM in the larger single sheet the sizing formula demands for bigger or deeper builds.' },
+  ],
+  filters: [
+    { name: 'OASE BioSmart 5000 Pond Filter', asin: 'B00J767SJE', note: 'Flow-through mechanical + biological filtration with a cleaning indicator. Note: the 5,000-gallon figure is the no-fish rating — derate it for a stocked pond.' },
+    { name: 'TetraPond Bio-Active Pressure Filter (BP1500 / BP2500 sizes)', asin: 'B00D7JBDZM', note: 'Backflush cleaning without opening the unit; bio media is rinsed, never replaced on a schedule. Choose your size on the product page — the BP2500 is the 2,500-gallon size; treat it as roughly a 1,250-gallon filter on a stocked fish pond.' },
+    { name: 'Laguna Clear-Flo 1000 Kit (PT1741)', asin: 'B00T4503UO', note: 'Pressure-Flo filter and solids-handling Max-Flo pump matched by the maker, so the two halves of the system cannot be mismatched.' },
+  ],
+  'uv-clarifiers': [
+    { name: 'TetraPond GreenFree UVC-5 (5W)', asin: 'B00474BFSQ', note: 'The small-pond green-water fix (up to 660 gallons): quartz sleeve, reflective insert, replaceable bulb — budget about one bulb a season.' },
+    { name: 'TotalPond UV Pond Clarifier (9W)', asin: 'B004DL0Y76', note: 'The mid-size step up for green water, with a 16-ft cord. Treats single-cell algae only — run it after the mechanical filter.' },
+    { name: 'Jebao STU-36 Stainless Clarifier (36W)', asin: 'B08Z3T7RKS', note: 'For larger ponds (maker-rated to ~8,000 gallons): stainless housing, vertical or horizontal mounting, stated bulb-replacement guidance up front.' },
+  ],
+  skimmers: [
+    { name: 'Aquascape Signature Series 200 Skimmer (43020)', asin: 'B019J2C3EA', note: 'Lift-out debris net, 6″ weir that tracks the water level, and a protected in-body home for the pump. Ponds up to 200 sq ft, flows to 3,000 GPH.' },
+    { name: 'Aquascape Signature Series 400 Skimmer (43021)', asin: 'B019J2C4H6', note: 'Rigid basket plus filter mat, locking weir door for maintenance draining, faux-rock lid. Ponds up to 400 sq ft, flows to 4,000 GPH.' },
+  ],
+  aerators: [
+    { name: 'Aquascape Pond Air 2 Aeration Kit (75000)', asin: 'B0078LTKM8', note: 'Complete 2-outlet kit — compressor, tubing, diffusers — for ponds up to 2,000 gallons, summer oxygen and winter insurance in one box.' },
+    { name: 'Aquascape Pro Air 20 Aeration Kit (61009)', asin: 'B078WG39Z4', note: 'Outdoor-rated compressor, 0.71 CFM, rated to 6.5 ft depth, self-cleaning membrane diffuser, 25 ft of braided airline. Ponds up to 5,000 gallons.' },
+    { name: 'Tetra Pond Air Pump Kit (19706)', asin: 'B00CQ7JRAY', note: 'The winter-survival kit: tubing, air stones and check valves included, 30-ft cord so the pump can sit safely above water level.' },
+  ],
+}
+
+export const associatesUrl = (asin) => `https://www.amazon.com/dp/${asin}/?tag=amazon300008-20`
+
+// End-of-guide gear boxes: guide slug -> Gear Hub category ids (kit Step 5 map).
+export const guideGear = {
+  'size-a-pond-pump': ['pumps'],
+  'pond-algae-control': ['uv-clarifiers'],
+  'pond-liners-vs-preformed-shells': ['liners'],
+  'winterizing-your-pond': ['aerators'],
+  'koi-pond-basics': ['filters', 'pumps'],
+  'build-a-backyard-pond': ['liners', 'skimmers'],
+}
