@@ -141,11 +141,52 @@ function HomePage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl pb-16" aria-labelledby="books-heading">
+        <h2 id="books-heading" className="text-2xl font-bold text-emerald-950 sm:text-3xl">Our books on Amazon</h2>
+        <p className="mt-3 max-w-3xl leading-7 text-slate-600">The PondCo team's own pond-care books — the handbook in Kindle and paperback, plus the logbook for keeping records. Full details on the <Link className="font-semibold text-teal-800 underline" to="/books">Books page</Link>.</p>
+        <BookCards />
+      </section>
+
       <section className="mx-auto max-w-6xl pb-16">
         <div className="flex items-start gap-3 rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm">
           <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-teal-700" aria-hidden="true" />
           <p className="leading-7 text-slate-600"><strong className="text-emerald-950">How PondCo works:</strong> every guide here is written from established pond-keeping practice, states its rules of thumb as rules of thumb, and corrects errors when readers flag them. We do not publish fake reviews, invented ratings, or "best product" lists for products we have not verified. Where affiliate links appear, they are marked as advertising — and they never change the criteria we publish.</p>
         </div>
+      </section>
+    </>
+  )
+}
+
+const BOOKS = [
+  { asin: 'B0HN64L3ZZ', title: 'The Pond Care Handbook', format: 'Kindle eBook', note: 'The complete backyard pond and water-garden handbook — building, stocking, seasonal care, and fixing problems, in one place.' },
+  { asin: 'B0HN56D93D', title: 'The Pond Care Handbook', format: 'Paperback', note: 'The same complete handbook in print — the copy that lives by the pond, not on a phone screen.' },
+  { asin: 'B0HN51TGWF', title: 'The Pond Care Logbook', format: 'Paperback', note: 'A working logbook for pond keepers: water tests, treatments, livestock, and seasonal jobs, recorded season after season. Not the same book as the IngramSpark title "The Backyard Pond Log Book".' },
+]
+
+function BookCards() {
+  return (
+    <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {BOOKS.map((book) => (
+        <article key={book.asin} className="flex flex-col rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm">
+          <BookOpen className="h-8 w-8 text-teal-700" aria-hidden="true" />
+          <h3 className="mt-4 text-xl font-bold text-emerald-950">{book.title}</h3>
+          <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-teal-700">{book.format}</p>
+          <p className="mt-3 flex-1 leading-7 text-slate-600">{book.note}</p>
+          <a className="mt-5 inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-5 font-semibold text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-700" href={associatesUrl(book.asin)} target="_blank" rel="nofollow sponsored noopener">Buy on Amazon (paid link)</a>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+function BooksPage() {
+  return (
+    <>
+      <Seo title="Our Books | PondCo" description="PondCo's own books on Amazon: The Pond Care Handbook (Kindle eBook and paperback) and The Pond Care Logbook (paperback)." path="/books" />
+      <section className="mx-auto max-w-6xl py-12 sm:py-16">
+        <h1 className="text-3xl font-bold text-emerald-950 sm:text-4xl">Our books</h1>
+        <p className="mt-4 max-w-3xl leading-7 text-slate-600">Written and published by the PondCo team (3000 Studios) and sold on Amazon. Buy buttons are Amazon Associates links, labelled (paid link) — as an Amazon Associate I earn from qualifying purchases, at no extra cost to you.</p>
+        <BookCards />
       </section>
     </>
   )
@@ -391,7 +432,7 @@ function Layout() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
   useEffect(() => setOpen(false), [location.pathname])
-  const links = [['Home', '/'], ['Guides', '/guides'], ['Gear Hub', '/gear'], ['About', '/about'], ['Contact', '/contact']]
+  const links = [['Home', '/'], ['Guides', '/guides'], ['Books', '/books'], ['Gear Hub', '/gear'], ['About', '/about'], ['Contact', '/contact']]
   return (
     <div className="min-h-screen bg-[#F7F6F0] text-slate-800">
       <header className="border-b border-emerald-900/10 bg-white/95">
@@ -407,6 +448,7 @@ function Layout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/guides" element={<GuidesIndex />} />
           {guides.map((guide) => <Route key={guide.slug} path={`/guides/${guide.slug}`} element={<GuidePage guide={guide} />} />)}
+          <Route path="/books" element={<BooksPage />} />
           <Route path="/gear" element={<GearPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -425,7 +467,7 @@ function Layout() {
               <p className="mt-2 text-sm leading-6 text-slate-500">As an Amazon Associate I earn from qualifying purchases.</p>
             </div>
             <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600" aria-label="Footer">
-              <Link to="/guides">Guides</Link><Link to="/gear">Gear Hub</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/cookies">Cookies</Link>
+              <Link to="/guides">Guides</Link><Link to="/books">Books</Link><Link to="/gear">Gear Hub</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/cookies">Cookies</Link>
             </nav>
           </div>
           <p className="mt-8 text-sm text-slate-400">© {new Date().getFullYear()} PondCo (pondco.online). All guides are educational; verify product and chemical instructions against the manufacturer's label.</p>
