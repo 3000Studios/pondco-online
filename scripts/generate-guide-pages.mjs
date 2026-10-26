@@ -41,6 +41,8 @@ function page({ title, description, canonical, type = 'website', body }) {
   <meta name="twitter:image" content="${ORIGIN}/og-image.png" />
   <meta name="google-adsense-account" content="ca-pub-5800977493749262">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5800977493749262" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/acss-3000.css" />
+  <style>:root{--acss-brand:oklch(0.56 0.11 192);--acss-brand-2:oklch(0.62 0.12 155)}</style>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #F7F6F0; color: #334155; line-height: 1.7; margin: 0; padding: 2rem 1.5rem; }
     .container { max-width: 800px; margin: 0 auto; }
@@ -55,6 +57,7 @@ function page({ title, description, canonical, type = 'website', body }) {
   </style>
 </head>
 <body>
+  <div class="acss-progress" aria-hidden="true"></div>
   <div class="container">
     <header>
       <a href="/">Return Home</a>
