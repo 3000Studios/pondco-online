@@ -66,7 +66,7 @@ function PondScene() {
 
 function GuideCard({ guide }) {
   return (
-    <Link to={`/guides/${guide.slug}`} className="group flex flex-col rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm transition hover:shadow-md">
+    <Link to={`/guides/${guide.slug}`} className="group acss-lift acss-press flex flex-col rounded-2xl border border-emerald-900/10 bg-white p-6 shadow-sm transition hover:shadow-md">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">{guide.eyebrow}</p>
       <h3 className="mt-2 text-xl font-bold leading-snug text-emerald-950 group-hover:text-teal-800">{guide.heading}</h3>
       <p className="mt-2 flex-1 leading-7 text-slate-600">{guide.description}</p>
