@@ -1,3 +1,9 @@
+# PondCo — Cloudflare Pages redirects.
+# Deliberate rules only. There is deliberately NO /* catch-all: Pages'
+# validator ignores splat -> /index.html rules as infinite loops, and with
+# dist/404.html present (scripts/generate-404.mjs) unmatched paths are
+# served 404.html with a genuine 404 status.
+# NOTE (2026-11-22 rebase): /books is a real generated static page now
+# (33fd25a), so it needs NO rewrite — a rewrite would shadow the file.
 / /home 200
 /privacy-policy /privacy 301
-/* /index.html 200

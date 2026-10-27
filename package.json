@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-guide-pages.mjs && vite build",
+    "build": "node scripts/generate-guide-pages.mjs && vite build && node scripts/generate-404.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
