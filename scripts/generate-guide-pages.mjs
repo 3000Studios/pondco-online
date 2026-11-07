@@ -67,7 +67,7 @@ function page({ title, description, canonical, type = 'website', body }) {
 ${body}
     </main>
     <footer>
-      <a href="/guides">Guides</a><a href="/gear">Gear Hub</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a>
+      <a href="/guides">Guides</a><a href="/gear">Gear Hub</a><a href="/books">Books</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a>
       <p>As an Amazon Associate I earn from qualifying purchases.</p>
       <p>&copy; 2026 PondCo (pondco.online)</p>
     </footer>
@@ -259,3 +259,36 @@ fs.writeFileSync(
 )
 
 console.log('generate-guide-pages: wrote gear.html + home.html')
+
+// --- Static Books page, same pattern as the pages above ---
+// Copy mirrors src/App.jsx (BooksPage + BOOKS, duplicated above as homeBooks).
+
+const booksBody = `      <h1>Our books</h1>
+      <p>Written and published by the PondCo team (3000 Studios) and sold on Amazon. Buy buttons are Amazon Associates links, labelled (paid link) — as an Amazon Associate I earn from qualifying purchases, at no extra cost to you.</p>
+${homeBooks
+  .map(
+    (book) => `    <section class="card">
+      <p class="eyebrow">${esc(book.format)}</p>
+      <h2>${esc(book.title)}</h2>
+      <p>${esc(book.note)}</p>
+      <p><a href="${esc(associatesUrl(book.asin))}" target="_blank" rel="nofollow sponsored noopener">Buy on Amazon (paid link)</a></p>
+    </section>`,
+  )
+  .join('\n')}
+    <section class="card">
+      <h2>Keep going</h2>
+      <p>Browse <a href="/guides">all PondCo guides</a>, or check the <a href="/gear">Gear Hub</a> before your next purchase.</p>
+    </section>`
+
+fs.writeFileSync(
+  path.join(publicDir, 'books.html'),
+  page({
+    title: 'Our Books | PondCo',
+    description:
+      "PondCo's own books on Amazon: The Pond Care Handbook (Kindle eBook and paperback) and The Pond Care Logbook (paperback).",
+    canonical: `${ORIGIN}/books`,
+    body: booksBody,
+  }),
+)
+
+console.log('generate-guide-pages: wrote books.html')
